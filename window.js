@@ -8,6 +8,9 @@ app.on('ready', () => {
     });
 
     mainWindow.loadFile('index.html');
+    
+    mainWindow.openDevTools();
+
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
