@@ -19,6 +19,24 @@ export function setEvents() {
             }
         }
 
+        function loadMap(url, options, zoom = options['maxZoom'] ?? 18, center = [35.6809591, 139.7673068]) {
+            loadLeaflet();
+            //スクリプトが読み込めるまで繰り返す
+            id = setInterval(() => {
+                try {
+                    //Lがあるか確認
+                    L;
+                    //インターバルを削除
+                    clearInterval(id);
+
+                    //地図読み込み
+                    backgroundObj = L.map('background', {center, zoom});
+                    L.tileLayer(url, options).addTo(backgroundObj);
+                }
+                catch {}
+            }, 5);
+        }
+
         backgroundObj?.remove();
         document.getElementById('background').innerHTML = '';
         document.getElementById('background').getAttributeNames().forEach(item => {
@@ -31,44 +49,21 @@ export function setEvents() {
             case '':
                 break;
             case 'openstreetmap':
-                loadLeaflet();
-                //スクリプトが読み込めるまで繰り返す
-                id = setInterval(() => {
-                    try {
-                        //Lがあるか確認
-                        L;
-                        //インターバルを削除
-                        clearInterval(id);
-
-                        //地図読み込み
-                        backgroundObj = L.map('background', {
-                            center: [35.6809591, 139.7673068],
-                            zoom: 17,
-                        });
-                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                            attribution: '© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-                        }).addTo(backgroundObj);
-                    }
-                    catch {}
-                }, 5);
+                loadMap('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+                })
                 break;
             case 'gsi-map':
-                loadLeaflet();
-                id = setInterval(() => {
-                    try {
-                        L;
-                        clearInterval(id);
-
-                        backgroundObj = L.map('background', {
-                            center: [35.6809591, 139.7673068],
-                            zoom: 17,
-                        });
-                        L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
-                            attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>"
-                        }).addTo(backgroundObj);
-                    }
-                    catch{}
-                }, 5);
+            case 'gsi-map-photo':
+            case 'gsi-map-pale':
+            case 'gsi-map-blank':
+                loadMap('https://cyberjapandata.gsi.go.jp/xyz/{maptype}/{z}/{x}/{y}.{extension}', {
+                    maptype: ({'': 'std', 'photo': 'seamlessphoto'})[background.replace(/^gsi-map-?/, '')] ?? background.replace(/^gsi-map-/, ''),
+                    extension: ['photo'].includes(background.replace(/^gsi-map-?/, '')) ? 'jpg' : 'png',
+                    attribution: '<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">地理院タイル</a>',
+                    maxZoom: ({'blank': 14})[background.replace(/^gsi-map-?/, '')] ?? 18,
+                    minZoom: ({'photo': 2, 'pale': 2, 'blank': 5})[background.replace(/^gsi-map-?/, '')] ?? 0,
+                })
                 break;
         }
     })
