@@ -14,20 +14,28 @@ body {
     border-bottom: 1px lightgray solid;
 }
 
-#menu > div {
+#menu div {
     display: flex;
     margin: 0 10px;
 }
 
-#menu > div > * {
-    margin: 10px 3px;
+#menu div > * {
+    margin: 10px 2.5px;
+}
+
+#menu p {
+    font-size: 15px;
+}
+
+#menu select {
+    border: 1px solid black;
 }
 
 #background-setting > select {
     width: 180px;
 }
 
-#display-area {
+#map-area {
     position: absolute;
     top: var(--menu-height);
     width: 100vw;
