@@ -30,7 +30,10 @@ export function setEvents() {
                     clearInterval(id);
 
                     //地図読み込み
-                    backgroundObj = L.map('background', {center, zoom});
+                    backgroundObj = L.map('background', {
+                        center: center,
+                        zoom: zoom,
+                        zoomControl: false});
                     L.tileLayer(url, options).addTo(backgroundObj);
                 }
                 catch {}
