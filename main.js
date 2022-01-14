@@ -1,2 +1,2 @@
-import { setEvents as setBackgroundEvents } from './js/background.js';
-import { setEvents as setObjectEvents } from './js/object.js';
+import {} from './js/background.js';
+import {} from './js/object.js';
