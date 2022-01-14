@@ -70,6 +70,4 @@ export function setBackground(name) {
     }
 }
 
-export function setEvents() {
-    document.querySelector('#background-setting > select').addEventListener('change', e => background(e.currentTarget.value));
-}
+document.querySelector('#background-setting > select').addEventListener('change', e => background(e.currentTarget.value));
