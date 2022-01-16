@@ -6,6 +6,12 @@ export * from "./draw.js";
 export let points = {};
 export let objects = {};
 
+export function getHash(object) {
+    return Object.keys(objects).reduce((r, key) => { 
+        return objects[key] === object ? key : r 
+    }, '');
+}
+
 points.add = value => {
     let hash = api.getHash()
     points[hash] = value;

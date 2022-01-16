@@ -27,17 +27,18 @@ export function addLine(list) {
     });
 }
 
-export function addArea(list) {
+export function addArea(list, closed = true) {
     let linkedPoints = [];
     for (let item of list) {
         linkedPoint.push(points.add({
             x: item[0],
             y: item[1],
-        }))
+        }));
     }
     return objects.add({
         type: 'area',
         linkedPoints: linkedPoints,
+        closed: closed,
     });
 }
 
@@ -58,24 +59,34 @@ document.getElementById('add-line').addEventListener('click', () => {
             y: e.clientY - elTop - elCenterY + centerY,
         }));
 
-        function endLine() {
+        function end() {
             mapEl.removeEventListener('click', fn);
-            lastPoint.removeEventListener('click', endLine);
+            lastPoint.removeEventListener('click', end);
         }
-        lastPoint?.removeEventListener('click', endLine)
+        lastPoint?.removeEventListener('click', end)
         lastPoint = draw(object)[1].slice(-1)[0];
-        lastPoint.addEventListener('click', endLine);
+        lastPoint.addEventListener('click', end);
     })
 })
 
-/*document.getElementById('add-area').addEventListener('click', () => {
-    document.getElementById('map').addEventListener('click', function fn(e) {
-        if (object == null) objects[addLine([])];
+document.getElementById('add-area').addEventListener('click', () => {
+    let object = null;
+    let firstPoint = null;
+    mapEl.addEventListener('click', function fn(e) {
+        if (object == null) object = objects[addArea([], false)];
         object.linkedPoints.push(points.add({
             x: e.clientX - elLeft - elCenterX + centerX, 
             y: e.clientY - elTop - elCenterY + centerY,
         }));
-        draw(object);
-        e.currentTarget.removeEventListener('click', fn);
+
+        function end() {
+            object.closed = true;
+            draw(object);
+
+            mapEl.removeEventListener('click', fn);
+            firstPoint.removeEventListener('click', end);
+        }
+        firstPoint = draw(object)[1][0];
+        firstPoint.addEventListener('click', end);
     })
-})*/
+})
