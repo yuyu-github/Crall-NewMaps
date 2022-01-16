@@ -1,4 +1,4 @@
-import { centerX, centerY, elCenterX, elCenterY, elLeft, elTop } from "../map.js";
+import { centerX, centerY, elCenterX, elCenterY, elLeft, elTop, mapEl } from "../map.js";
 import { draw } from "./draw.js";
 import { objects, points } from "./object.js";
 
@@ -42,26 +42,33 @@ export function addArea(list) {
 }
 
 document.getElementById('add-point').addEventListener('click', () => {
-    document.getElementById('map').addEventListener('click', function fn(e) {
+    mapEl.addEventListener('click', function fn(e) {
         draw(objects[addPoint(e.clientX - elLeft - elCenterX + centerX, e.clientY - elTop - elCenterY + centerY)]);
-        e.currentTarget.removeEventListener('click', fn);
+        mapEl.removeEventListener('click', fn);
     })
 })
 
 document.getElementById('add-line').addEventListener('click', () => {
     let object = null;
-    document.getElementById('map').addEventListener('click', function fn(e) {
-        if (object == null) objects[addLine([])];
+    let lastPoint = null;
+    mapEl.addEventListener('click', function fn(e) {
+        if (object == null) object = objects[addLine([])];
         object.linkedPoints.push(points.add({
             x: e.clientX - elLeft - elCenterX + centerX, 
             y: e.clientY - elTop - elCenterY + centerY,
         }));
-        draw(object);
-        e.currentTarget.removeEventListener('click', fn);
+
+        function endLine() {
+            mapEl.removeEventListener('click', fn);
+            lastPoint.removeEventListener('click', endLine);
+        }
+        lastPoint?.removeEventListener('click', endLine)
+        lastPoint = draw(object)[1].slice(-1)[0];
+        lastPoint.addEventListener('click', endLine);
     })
 })
 
-document.getElementById('add-area').addEventListener('click', () => {
+/*document.getElementById('add-area').addEventListener('click', () => {
     document.getElementById('map').addEventListener('click', function fn(e) {
         if (object == null) objects[addLine([])];
         object.linkedPoints.push(points.add({
@@ -71,4 +78,4 @@ document.getElementById('add-area').addEventListener('click', () => {
         draw(object);
         e.currentTarget.removeEventListener('click', fn);
     })
-})
+})*/

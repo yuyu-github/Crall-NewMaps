@@ -33,7 +33,7 @@ body {
     align-items: center;
 }
 
-#menu *:not(div) {
+#menu *:not(div):not(button) {
     margin: 0 2.5px;
 }
 
@@ -45,7 +45,7 @@ body {
     background-color: white;
     border: none;
     font-size: 14px;
-    padding: 3px 6px;
+    padding: 3px 4px;
 }
 
 #menu button:hover {

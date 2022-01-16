@@ -15,3 +15,11 @@ export function createSVGElement(name, attrs) {
     }
     return el;
 }
+
+export function addSVGElement(name, attrs, index) {
+    attrs.index = index;
+    for (let el of mapEl.children) {
+        if (el.getAttribute('index') >= index) return mapEl.insertBefore(createSVGElement(name, attrs), el);
+    }
+    return mapEl.appendChild(createSVGElement(name, attrs));
+}
