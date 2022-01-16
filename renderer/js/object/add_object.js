@@ -43,13 +43,17 @@ export function addArea(list, closed = true) {
 }
 
 document.getElementById('add-point').addEventListener('click', () => {
+    mapEl.style.cursor = 'crosshair';
     mapEl.addEventListener('click', function fn(e) {
         draw(objects[addPoint(e.clientX - elLeft - elCenterX + centerX, e.clientY - elTop - elCenterY + centerY)]);
+        mapEl.style.cursor = 'default';
         mapEl.removeEventListener('click', fn);
     })
 })
 
 document.getElementById('add-line').addEventListener('click', () => {
+    mapEl.style.cursor = 'crosshair';
+
     let object = null;
     let lastPoint = null;
     mapEl.addEventListener('click', function fn(e) {
@@ -60,16 +64,22 @@ document.getElementById('add-line').addEventListener('click', () => {
         }));
 
         function end() {
+            mapEl.style.cursor = 'default';
             mapEl.removeEventListener('click', fn);
+            lastPoint.style.cursor = 'default';
             lastPoint.removeEventListener('click', end);
         }
+        if (lastPoint != null) lastPoint.style.cursor = 'default';
         lastPoint?.removeEventListener('click', end)
         lastPoint = draw(object)[1].slice(-1)[0];
+        lastPoint.style.cursor = 'pointer';
         lastPoint.addEventListener('click', end);
     })
 })
 
 document.getElementById('add-area').addEventListener('click', () => {
+    mapEl.style.cursor = 'crosshair';
+
     let object = null;
     let firstPoint = null;
     mapEl.addEventListener('click', function fn(e) {
@@ -83,10 +93,13 @@ document.getElementById('add-area').addEventListener('click', () => {
             object.closed = true;
             draw(object);
 
+            mapEl.style.cursor = 'default';
             mapEl.removeEventListener('click', fn);
+            firstPoint.style.cursor = 'default';
             firstPoint.removeEventListener('click', end);
         }
         firstPoint = draw(object)[1][0];
+        firstPoint.style.cursor = 'pointer'
         firstPoint.addEventListener('click', end);
     })
 })
