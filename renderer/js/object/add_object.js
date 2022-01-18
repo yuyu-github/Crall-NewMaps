@@ -2,21 +2,21 @@ import { centerX, centerY, elCenterX, elCenterY, elLeft, elTop, mapEl } from "..
 import { draw } from "./draw.js";
 import { objects, points } from "./object.js";
 
-export function addPoint(x, y) {
-    let linkedPoint = points.add({
-        x: x,
-        y: y,
-    })
+export function addPoint(position) {
+    let linkedPoints = position.length != 0 ? [points.add({
+        x: position[0],
+        y: position[1],
+    })] : []
     return objects.add({
         type: 'point',
-        linkedPoints: [linkedPoint],
+        linkedPoints: linkedPoints,
     });
 }
 
 export function addLine(list) {
     let linkedPoints = [];
     for (let item of list) {
-        linkedPoint.push(points.add({
+        linkedPoints.push(points.add({
             x: item[0],
             y: item[1],
         }))
@@ -30,7 +30,7 @@ export function addLine(list) {
 export function addArea(list, closed = true) {
     let linkedPoints = [];
     for (let item of list) {
-        linkedPoint.push(points.add({
+        linkedPoints.push(points.add({
             x: item[0],
             y: item[1],
         }));
@@ -44,62 +44,101 @@ export function addArea(list, closed = true) {
 
 document.getElementById('add-point').addEventListener('click', () => {
     mapEl.style.cursor = 'crosshair';
+
+    let object = objects[addPoint([])];
+    object.isPreview = true;
     mapEl.addEventListener('click', function fn(e) {
-        draw(objects[addPoint(e.clientX - elLeft - elCenterX + centerX, e.clientY - elTop - elCenterY + centerY)]);
-        mapEl.style.cursor = 'default';
         mapEl.removeEventListener('click', fn);
-    })
+        mapEl.removeEventListener('mousemove', moveFn);
+        object.linkedPoints.push(points.add({
+            x: e.clientX - elLeft - elCenterX + centerX, 
+            y: e.clientY - elTop - elCenterY + centerY,
+        }));
+        object.isPreview = false;
+        draw(object);
+        mapEl.style.cursor = 'default';
+    });
+    function moveFn(e) {
+        object.previewX = e.clientX - elLeft - elCenterX + centerX;
+        object.previewY = e.clientY - elTop - elCenterY + centerY;
+        draw(object);
+    }
+    mapEl.addEventListener('mousemove', moveFn)
 })
 
 document.getElementById('add-line').addEventListener('click', () => {
     mapEl.style.cursor = 'crosshair';
 
-    let object = null;
+    let object = objects[addLine([])];
     let lastPoint = null;
-    mapEl.addEventListener('click', function fn(e) {
-        if (object == null) object = objects[addLine([])];
+    mapEl.addEventListener('click', clickFn);
+
+    function clickFn(e) {
         object.linkedPoints.push(points.add({
             x: e.clientX - elLeft - elCenterX + centerX, 
             y: e.clientY - elTop - elCenterY + centerY,
         }));
+        object.isPreview = false;
+    }
 
-        function end() {
-            mapEl.style.cursor = 'default';
-            mapEl.removeEventListener('click', fn);
-            lastPoint.style.cursor = 'default';
-            lastPoint.removeEventListener('click', end);
-        }
+    function end() {
+        mapEl.removeEventListener('click', clickFn);
+        lastPoint.removeEventListener('click', end);
+        mapEl.removeEventListener('mousemove', moveFn);
+        object.isPreview = false;
+        draw(object);
+        mapEl.style.cursor = 'default';
         if (lastPoint != null) lastPoint.style.cursor = 'default';
+    }
+
+    function moveFn(e) {
+        object.previewX = e.clientX - elLeft - elCenterX + centerX;
+        object.previewY = e.clientY - elTop - elCenterY + centerY;
+        object.isPreview = true;
+
         lastPoint?.removeEventListener('click', end)
+        if (lastPoint != null) lastPoint.style.cursor = 'default';
         lastPoint = draw(object)[1].slice(-1)[0];
-        lastPoint.style.cursor = 'pointer';
-        lastPoint.addEventListener('click', end);
-    })
+        lastPoint?.addEventListener('click', end);
+        if (lastPoint != null) lastPoint.style.cursor = 'pointer';
+    }
+    mapEl.addEventListener('mousemove', moveFn);
 })
 
 document.getElementById('add-area').addEventListener('click', () => {
     mapEl.style.cursor = 'crosshair';
 
-    let object = null;
+    let object = objects[addArea([], false)];
     let firstPoint = null;
-    mapEl.addEventListener('click', function fn(e) {
-        if (object == null) object = objects[addArea([], false)];
+    mapEl.addEventListener('click', clickFn);
+
+    function clickFn(e) {
         object.linkedPoints.push(points.add({
             x: e.clientX - elLeft - elCenterX + centerX, 
             y: e.clientY - elTop - elCenterY + centerY,
         }));
+        object.isPreview = false;
+    }
 
-        function end() {
-            object.closed = true;
-            draw(object);
+    function end() {
+        mapEl.removeEventListener('click', clickFn);
+        firstPoint.removeEventListener('click', end);
+        mapEl.removeEventListener('mousemove', moveFn);
+        object.isPreview = false;
+        object.closed = true;
+        draw(object);
+        mapEl.style.cursor = 'default';
+        if (firstPoint != null) firstPoint.style.cursor = 'default';
+    }
 
-            mapEl.style.cursor = 'default';
-            mapEl.removeEventListener('click', fn);
-            firstPoint.style.cursor = 'default';
-            firstPoint.removeEventListener('click', end);
-        }
+    function moveFn(e) {
+        object.previewX = e.clientX - elLeft - elCenterX + centerX;
+        object.previewY = e.clientY - elTop - elCenterY + centerY;
+        object.isPreview = true;
+
         firstPoint = draw(object)[1][0];
-        firstPoint.style.cursor = 'pointer'
-        firstPoint.addEventListener('click', end);
-    })
+        firstPoint?.addEventListener('click', end);
+        if (firstPoint != null) firstPoint.style.cursor = 'pointer'
+    }
+    mapEl.addEventListener('mousemove', moveFn);
 })
