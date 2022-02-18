@@ -1,5 +1,5 @@
 import { centerX, centerY, elCenterX, elCenterY, mapEl, addSVGElement } from '../map.js'
-import { mode } from '../mode.js'
+import { mode } from '../../mode.js'
 import { getHash, objects, points } from './object.js';
 
 export function draw(object) {

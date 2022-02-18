@@ -1,2 +1,3 @@
-import {} from './js/background.js';
-import {} from './js/object/object.js';
+import { init as initMap } from './js/map/map.js';
+
+initMap();

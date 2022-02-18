@@ -1,6 +1,8 @@
 export let background = document.querySelector('#background-setting > select').value;
 export let backgroundObj = null;
 
+export let init = () => document.querySelector('#background-setting > select').addEventListener('change', e => setBackground(e.currentTarget.value));
+
 export function setBackground(name) {
     function loadLeaflet() {
         if (document.getElementById('leaflet-style') == null) {
@@ -69,5 +71,3 @@ export function setBackground(name) {
             break;
     }
 }
-
-document.querySelector('#background-setting > select').addEventListener('change', e => setBackground(e.currentTarget.value));
