@@ -31,10 +31,8 @@ export let setCenterX = val => centerX = val;
 export let setCenterY = val => centerY = val;
 
 export function draw() {
-    console.log(tiles);
     let tileX = Math.floor(centerX / tileSize);
     let tileY = Math.floor(centerY / tileSize);
-    console.log(tileX, tileY);
 
     let drew = [];
     for (let i = tileX - 2; i <= tileX + 2; i++) {
