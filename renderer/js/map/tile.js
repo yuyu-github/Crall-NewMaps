@@ -7,8 +7,8 @@ export function init() {
         let addedTiles = [];
         for (let item of objects[hash]?.usePoints ?? []) {
             let point = points[item];
-            let x = Math.floor((point?.x ?? 0) / 100) + 2147483648;
-            let y = Math.floor((point?.y ?? 0) / 100) + 2147483648;
+            let x = Math.floor((point?.x ?? 0) / 100) + 1000000000000;
+            let y = Math.floor((point?.y ?? 0) / 100) + 1000000000000;
             if (!addedTiles.includes([x, y].join(','))) {
                 if (tiles[x] == undefined) tiles[x] = [];
                 if (tiles[x][y] == undefined) tiles[x][y] = [];
@@ -19,7 +19,7 @@ export function init() {
     }
 
     tiles.get = (x, y) => {
-        return tiles[x + 2147483648]?.[y + 2147483648] ?? [];
+        return tiles[x + 1000000000000]?.[y + 1000000000000] ?? [];
     }
 }
 
