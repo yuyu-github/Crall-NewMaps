@@ -45,4 +45,16 @@ export function init() {
         points[pointHash]['linkedObjects'] = list;
         tiles.addPoint(objectHash, pointHash);
     }
+
+    objects.delete = hash => {
+        for (let item of objects[hash]?.linkedPoints ?? []) {
+            if (points[item].linkedObjects.length == 1) delete points[item];
+            else points[item].linkedObjects.splice(points[item].linkedObjects.indexOf(hash), 1);
+        }
+        for (let item of objects[hash]?.linkedTiles ?? []) {
+            if (tiles[item[0]][item[1]].length == 1) delete tiles[item[0]][item[1]];
+            else tiles[item[0]][item[1]].splice(tiles[item[0]][item[1]].indexOf(hash), 1)
+        }
+        delete objects[hash];
+    }
 }
