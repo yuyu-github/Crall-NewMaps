@@ -11,7 +11,6 @@ export function init() {
         function moveFn(e) {
             setCenterX(startPosX + ((e.clientX - elLeft) - dragStartPosX));
             setCenterY(startPosY + ((e.clientY - elTop) - dragStartPosY));
-            console.log(centerX, centerY);
         }
         mapEl.addEventListener('mouseup', function fn() {
             mapEl.removeEventListener('mouseup', fn);
