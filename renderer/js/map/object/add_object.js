@@ -10,12 +10,13 @@ export function init() {
             editing = true;
             mapEl.style.cursor = 'crosshair';
 
-            let object = objects[addPoint([])];
+            let hash = addPoint([]);
+            let object = objects[hash];
             object.isPreview = true;
             mapEl.addEventListener('click', function fn(e) {
                 mapEl.removeEventListener('click', fn);
                 mapEl.removeEventListener('mousemove', moveFn);
-                object.linkedPoints.push(points.add({
+                objects.addPoint(hash, points.add({
                     x: e.clientX - elLeft - elCenterX + centerX, 
                     y: e.clientY - elTop - elCenterY + centerY,
                 }));

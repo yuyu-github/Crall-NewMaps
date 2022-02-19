@@ -1,3 +1,5 @@
+import { tiles, draw as drawTile, drawTileBorder, tileSize } from './tile.js';
+
 import { init as initDrag } from './drag.js';
 import { init as initBackground } from './background.js';
 import { init as initTile } from './tile.js';
@@ -27,6 +29,20 @@ export function init() {
 
 export let setCenterX = val => centerX = val;
 export let setCenterY = val => centerY = val;
+
+export function draw() {
+    console.log(tiles);
+    let tileX = Math.floor(centerX / tileSize);
+    let tileY = Math.floor(centerY / tileSize);
+    console.log(tileX, tileY);
+
+    let drew = [];
+    for (let i = tileX - 2; i <= tileX + 2; i++) {
+        for (let j = tileY - 1; j <= tileY + 1; j++) {
+            drew = drawTile(tiles.get(i, j), drew);
+        }
+    }
+}
 
 export function createSVGElement(name, attrs) {
     let el = document.createElementNS("http://www.w3.org/2000/svg", name);

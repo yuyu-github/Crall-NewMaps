@@ -1,4 +1,4 @@
-import { centerX, centerY, elLeft, elTop, mapEl, setCenterX, setCenterY } from "./map.js";
+import { centerX, centerY, elLeft, elTop, mapEl, setCenterX, setCenterY, draw } from "./map.js";
 
 export function init() {
     mapEl.addEventListener('mousedown', e => {
@@ -9,8 +9,9 @@ export function init() {
 
         mapEl.addEventListener('mousemove', moveFn);
         function moveFn(e) {
-            setCenterX(startPosX + ((e.clientX - elLeft) - dragStartPosX));
-            setCenterY(startPosY + ((e.clientY - elTop) - dragStartPosY));
+            setCenterX(startPosX - ((e.clientX - elLeft) - dragStartPosX));
+            setCenterY(startPosY - ((e.clientY - elTop) - dragStartPosY));
+            draw();
         }
         mapEl.addEventListener('mouseup', function fn() {
             mapEl.removeEventListener('mouseup', fn);
