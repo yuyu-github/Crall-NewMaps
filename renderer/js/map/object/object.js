@@ -56,5 +56,6 @@ export function init() {
             else tiles[item[0]][item[1]].splice(tiles[item[0]][item[1]].indexOf(hash), 1)
         }
         delete objects[hash];
+        Array.from(document.getElementsByClassName('object-' + hash)).forEach(item => item.remove());
     }
 }
