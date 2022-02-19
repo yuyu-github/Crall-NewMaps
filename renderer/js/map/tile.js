@@ -1,3 +1,4 @@
+import { elCenterX, elCenterY, centerX, centerY, addSVGElement } from './map.js';
 import { points, objects, draw as drawObject } from './object/object.js';
 
 export let tiles = [];
@@ -41,4 +42,46 @@ export function draw(tile, drew) {
         }
     }
     return drew;
+}
+
+export function drawTileBorder() {
+    document.querySelectorAll('.tileborder').forEach(item => item.remove());
+    for (let i = -6; i <= 6; i++) {
+        addSVGElement('line', {
+            'class': 'tileborder',
+            'x1': elCenterX + (Math.floor(centerX / 100) + i) * 100 - centerX + 'px',
+            'y1': '0px',
+            'x2': elCenterX + (Math.floor(centerX / 100) + i) * 100 - centerX + 'px',
+            'y2': '100%',
+            'stroke': 'black',
+            'stroke-width': '1px',
+        }, 1)
+        addSVGElement('line', {
+            'class': 'tileborder',
+            'x1': elCenterX + (Math.ceil(centerX / 100) + i) * 100 - centerX + 'px',
+            'y1': '0px',
+            'x2': elCenterX + (Math.ceil(centerX / 100) + i) * 100 - centerX + 'px',
+            'y2': '100%',
+            'stroke': 'black',
+            'stroke-width': '1px',
+        }, 1)
+        addSVGElement('line', {
+            'class': 'tileborder',
+            'x1': '0px',
+            'y1': elCenterY + (Math.floor(centerY / 100) + i) * 100 - centerY + 'px',
+            'x2': '100%',
+            'y2': elCenterY + (Math.floor(centerY / 100) + i) * 100 - centerY + 'px',
+            'stroke': 'black',
+            'stroke-width': '1px',
+        }, 1)
+        addSVGElement('line', {
+            'class': 'tileborder',
+            'x1': '0px',
+            'y1': elCenterY + (Math.ceil(centerY / 100) + i) * 100 - centerY + 'px',
+            'x2': '100%',
+            'y2': elCenterY + (Math.ceil(centerY / 100) + i) * 100 - centerY + 'px',
+            'stroke': 'black',
+            'stroke-width': '1px',
+        }, 1)
+    }
 }
