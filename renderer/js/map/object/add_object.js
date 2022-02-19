@@ -113,11 +113,14 @@ export function init() {
                 object.previewY = e.clientY - elTop - elCenterY + centerY;
                 object.isPreview = true;
 
-                lastPoint?.removeEventListener('click', finish)
-                if (lastPoint != null) lastPoint.style.cursor = 'default';
-                lastPoint = draw(object)[1].slice(-1)[0];
-                lastPoint?.addEventListener('click', finish);
-                if (lastPoint != null) lastPoint.style.cursor = 'pointer';
+                let drawresult = draw(object);
+                if (drawresult[1].length > 1) {
+                    lastPoint?.removeEventListener('click', finish)
+                    if (lastPoint != null) lastPoint.style.cursor = 'default';
+                    lastPoint = drawresult[1].slice(-1)[0];
+                    lastPoint?.addEventListener('click', finish);
+                    if (lastPoint != null) lastPoint.style.cursor = 'pointer';
+                }
             }
             mapEl.addEventListener('mousemove', moveFn);
         }
@@ -179,9 +182,12 @@ export function init() {
                 object.previewY = e.clientY - elTop - elCenterY + centerY;
                 object.isPreview = true;
 
-                firstPoint = draw(object)[1][0];
-                firstPoint?.addEventListener('click', finish);
-                if (firstPoint != null) firstPoint.style.cursor = 'pointer'
+                let drawresult = draw(object);
+                if (drawresult[1].length > 2) {
+                    firstPoint = drawresult[1][0];
+                    firstPoint?.addEventListener('click', finish);
+                    if (firstPoint != null) firstPoint.style.cursor = 'pointer'
+                }
             }
             mapEl.addEventListener('mousemove', moveFn);
         }
