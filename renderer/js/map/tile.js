@@ -15,6 +15,8 @@ export function init() {
                 if (tiles[x] == undefined) tiles[x] = [];
                 if (tiles[x][y] == undefined) tiles[x][y] = [];
                 tiles[x][y].push(hash);
+                objects[hash].linkedTiles ??= [];
+                objects[hash].linkedTiles.push([x, y]);
                 addedTiles.push([x, y].join(','));
             }
         }
@@ -27,7 +29,11 @@ export function init() {
         if (tiles[x] == undefined) tiles[x] = [];
         if (tiles[x][y] == undefined) tiles[x][y] = [];
         
-        if (!tiles[x][y].includes(objectHash)) tiles[x][y].push(objectHash);
+        if (!tiles[x][y].includes(objectHash)) {
+            tiles[x][y].push(objectHash);
+            objects[objectHash].linkedTiles ??= [];
+            objects[objectHash].linkedTiles.push([x, y]);
+        }
     }
 
     tiles.get = (x, y) => {
