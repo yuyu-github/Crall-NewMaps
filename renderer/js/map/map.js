@@ -1,4 +1,5 @@
 import { tiles, draw as drawTile, drawTileBorder, tileSize } from './tile.js';
+import { moveTo } from './background.js';
 
 import { init as initDrag } from './drag.js';
 import { init as initBackground } from './background.js';
@@ -40,6 +41,8 @@ export function draw() {
             drew = drawTile(tiles.get(i, j), drew);
         }
     }
+
+    moveTo(centerX, centerY);
 }
 
 export function createSVGElement(name, attrs) {

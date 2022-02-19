@@ -1,4 +1,7 @@
+import { centerX, centerY } from "./map.js";
+
 export let background = document.querySelector('#background-setting > select').value;
+export let backgroundType = '';
 export let backgroundObj = null;
 
 export let init = () => document.querySelector('#background-setting > select').addEventListener('change', e => setBackground(e.currentTarget.value));
@@ -20,7 +23,7 @@ export function setBackground(name) {
         }
     }
 
-    function loadMap(url, options, zoom = options['maxZoom'] ?? 18, center = [35.6809591, 139.7673068]) {
+    function loadMap(url, options, zoom = options['maxZoom'] ?? 18) {
         loadLeaflet();
         //スクリプトが読み込めるまで繰り返す
         id = setInterval(() => {
@@ -31,11 +34,15 @@ export function setBackground(name) {
                 clearInterval(id);
 
                 //地図読み込み
+                backgroundType = 'worldmap'
                 backgroundObj = L.map('background', {
-                    center: center,
+                    center: [0, 0],
                     zoom: zoom,
-                    zoomControl: false});
+                    zoomControl: false,
+                });
                 L.tileLayer(url, options).addTo(backgroundObj);
+
+                moveTo(centerX, centerY);
             }
             catch {}
         }, 5);
@@ -46,6 +53,7 @@ export function setBackground(name) {
     document.getElementById('background').getAttributeNames().forEach(item => {
         if (item != 'id') document.getElementById('background').removeAttribute(item);});
     background = name;
+    backgroundType = '';
     backgroundObj = null;
 
     let id;
@@ -69,5 +77,16 @@ export function setBackground(name) {
                 minZoom: ({'photo': 2, 'pale': 2, 'blank': 5})[background.replace(/^gsi-map-?/, '')] ?? 0,
             })
             break;
+    }
+}
+
+export function moveTo(x, y) {
+    const latScale = 0.000004353;
+    const lngScale = 0.000005363;
+
+    switch (backgroundType) {
+        case 'worldmap': {
+            backgroundObj.panTo([35.6809591 - y * latScale, 139.7673068 + x * lngScale], { animate: false });
+        }
     }
 }
