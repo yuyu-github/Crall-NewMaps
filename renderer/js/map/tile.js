@@ -3,9 +3,9 @@ import { points, objects, draw as drawObject } from './object/object.js';
 export let tiles = [];
 
 export function init() {
-    tiles.add = hash => {
+    tiles.addObject = hash => {
         let addedTiles = [];
-        for (let item of objects[hash]?.usePoints ?? []) {
+        for (let item of objects[hash]?.linkedPoints ?? []) {
             let point = points[item];
             let x = Math.floor((point?.x ?? 0) / 100) + 1000000000000;
             let y = Math.floor((point?.y ?? 0) / 100) + 1000000000000;
@@ -16,6 +16,16 @@ export function init() {
                 addedTiles.push([x, y].join(','));
             }
         }
+    }
+
+    tiles.addPoint = (objectHash, pointHash) => {
+        let point = points[pointHash];
+        let x = Math.floor((point?.x ?? 0) / 100) + 1000000000000;
+        let y = Math.floor((point?.y ?? 0) / 100) + 1000000000000;
+        if (tiles[x] == undefined) tiles[x] = [];
+        if (tiles[x][y] == undefined) tiles[x][y] = [];
+        
+        if (!tiles[x][y].includes(objectHash)) tiles[x][y].push(objectHash);
     }
 
     tiles.get = (x, y) => {

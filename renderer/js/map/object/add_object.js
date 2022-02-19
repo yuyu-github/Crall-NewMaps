@@ -38,12 +38,13 @@ export function init() {
             mapEl.style.cursor = 'crosshair';
             editing = true;
 
-            let object = objects[addLine([])];
+            let hash = addLine([], false)
+            let object = objects[hash];
             let lastPoint = null;
             mapEl.addEventListener('click', clickFn);
 
             function clickFn(e) {
-                object.linkedPoints.push(points.add({
+                objects.addPoint(hash, points.add({
                     x: e.clientX - elLeft - elCenterX + centerX, 
                     y: e.clientY - elTop - elCenterY + centerY,
                 }));
@@ -81,12 +82,13 @@ export function init() {
             mapEl.style.cursor = 'crosshair';
             editing = true;
 
-            let object = objects[addArea([], false)];
+            let hash = addArea([], false)
+            let object = objects[hash];
             let firstPoint = null;
             mapEl.addEventListener('click', clickFn);
 
             function clickFn(e) {
-                object.linkedPoints.push(points.add({
+                objects.addPoint(hash, points.add({
                     x: e.clientX - elLeft - elCenterX + centerX, 
                     y: e.clientY - elTop - elCenterY + centerY,
                 }));

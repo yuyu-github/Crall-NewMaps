@@ -32,7 +32,17 @@ export function init() {
             list.push(hash)
             points[item]['linkedObjects'] = list;
         }
-        tiles.add(hash);
+        tiles.addObject(hash);
         return hash;
+    }
+
+    objects.addPoint = (objectHash, pointHash) => {
+        objects[objectHash].linkedPoints ??= [];
+        objects[objectHash].linkedPoints.push(pointHash);
+        //pointsのlinkedObjctsに追加
+        let list = points[pointHash]?.['linkedObjects'] ?? [];
+        list.push(objectHash);
+        points[pointHash]['linkedObjects'] = list;
+        tiles.addPoint(objectHash, pointHash);
     }
 }
