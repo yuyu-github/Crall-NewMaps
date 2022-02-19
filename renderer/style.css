@@ -6,7 +6,7 @@ body {
 }
 
 #edit-menu {
-    --edit-menu-background-color: #fcfcfc;
+    --edit-menu-background-color: #fafafa;
 
     position: absolute;
     display: flex;
@@ -42,7 +42,7 @@ body {
 }
 
 #edit-menu button:hover {
-    background-color: #eaeaea;
+    background-color: #e5e5e5;
 }
 
 #edit-menu select {
