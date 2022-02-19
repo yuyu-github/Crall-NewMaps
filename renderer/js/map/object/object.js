@@ -26,7 +26,7 @@ export function init() {
     objects.add = value => {
         let hash = api.getHash();
         objects[hash] = value;
-        //pointsのusingObjctsに追加
+        //pointsのlinkedObjctsに追加
         for (let item of value?.linkedPoints ?? []) {
             let list = points[item]?.['linkedObjects'] ?? [];
             list.push(hash)
