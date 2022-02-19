@@ -1,60 +1,54 @@
 body {
-    --menu-height: 40px;
+    --edit-menu-height: 35px;
 
     margin: 0;
     overflow: hidden;
 }
 
-#menu {
+#edit-menu {
+    --edit-menu-background-color: #fcfcfc;
+
     position: absolute;
     display: flex;
     align-items: center;
     width: 100vw;
-    height: var(--menu-height);
+    height: var(--edit-menu-height);
+    padding: 0 5px;
+    background-color: var(--edit-menu-background-color);
     border-bottom: 1px lightgray solid;
 }
 
-#menu > div:first-child {
-    margin: 0;
-    margin-right: 10px;
-}
-
-#menu > div:not(:first-child):not(:last-child) {
-    margin: 0 10px;
-}
-
-#menu > div:last-child {
-    margin: 0;
-    margin-left: 10px;
-}
-
-#menu div {
+#edit-menu div {
     display: flex;
     align-items: center;
 }
 
-#menu *:not(div):not(button) {
+#edit-menu *:not(div) {
+    background-color: var(--edit-menu-background-color);
+}
+
+#edit-menu *:not(div):not(button) {
     margin: 0 2.5px;
 }
 
-#menu p {
+#edit-menu p {
     font-size: 14px;
 }
 
-#menu button {
-    background-color: white;
+#edit-menu button {
     border: none;
     font-size: 14px;
     padding: 3px 4px;
 }
 
-#menu button:hover {
-    background-color: #f0f0f0;
+#edit-menu button:hover {
+    background-color: #eaeaea;
 }
 
-#menu select {
+#edit-menu select {
     padding: 2px;
     border: 1px solid black;
+    background-color: white;
 }
 
 #background-setting > select {
@@ -63,9 +57,9 @@ body {
 
 #map-area {
     position: absolute;
-    top: var(--menu-height);
+    top: var(--edit-menu-height);
     width: 100vw;
-    height: calc(100vh - var(--menu-height));
+    height: calc(100vh - var(--edit-menu-height));
 }
 
 #background {
