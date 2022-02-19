@@ -2,7 +2,7 @@ import { elCenterX, elCenterY, centerX, centerY, addSVGElement } from './map.js'
 import { points, objects, draw as drawObject } from './object/object.js';
 
 export let tiles = [];
-export const tileSize = 100;
+export const tileSize = 500;
 
 export function init() {
     tiles.addObject = hash => {
