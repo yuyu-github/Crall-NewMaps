@@ -2,14 +2,15 @@ import { elCenterX, elCenterY, centerX, centerY, addSVGElement } from './map.js'
 import { points, objects, draw as drawObject } from './object/object.js';
 
 export let tiles = [];
+export const tileSize = 100;
 
 export function init() {
     tiles.addObject = hash => {
         let addedTiles = [];
         for (let item of objects[hash]?.linkedPoints ?? []) {
             let point = points[item];
-            let x = Math.floor((point?.x ?? 0) / 100) + 1000000000000;
-            let y = Math.floor((point?.y ?? 0) / 100) + 1000000000000;
+            let x = Math.floor((point?.x ?? 0) / tileSize) + 1000000000000;
+            let y = Math.floor((point?.y ?? 0) / tileSize) + 1000000000000;
             if (!addedTiles.includes([x, y].join(','))) {
                 if (tiles[x] == undefined) tiles[x] = [];
                 if (tiles[x][y] == undefined) tiles[x][y] = [];
@@ -21,8 +22,8 @@ export function init() {
 
     tiles.addPoint = (objectHash, pointHash) => {
         let point = points[pointHash];
-        let x = Math.floor((point?.x ?? 0) / 100) + 1000000000000;
-        let y = Math.floor((point?.y ?? 0) / 100) + 1000000000000;
+        let x = Math.floor((point?.x ?? 0) / tileSize) + 1000000000000;
+        let y = Math.floor((point?.y ?? 0) / tileSize) + 1000000000000;
         if (tiles[x] == undefined) tiles[x] = [];
         if (tiles[x][y] == undefined) tiles[x][y] = [];
         
@@ -49,18 +50,18 @@ export function drawTileBorder() {
     for (let i = -6; i <= 6; i++) {
         addSVGElement('line', {
             'class': 'tileborder',
-            'x1': elCenterX + (Math.floor(centerX / 100) + i) * 100 - centerX + 'px',
+            'x1': elCenterX + (Math.floor(centerX / tileSize) + i) * tileSize - centerX + 'px',
             'y1': '0px',
-            'x2': elCenterX + (Math.floor(centerX / 100) + i) * 100 - centerX + 'px',
+            'x2': elCenterX + (Math.floor(centerX / tileSize) + i) * tileSize - centerX + 'px',
             'y2': '100%',
             'stroke': 'black',
             'stroke-width': '1px',
         }, 1)
         addSVGElement('line', {
             'class': 'tileborder',
-            'x1': elCenterX + (Math.ceil(centerX / 100) + i) * 100 - centerX + 'px',
+            'x1': elCenterX + (Math.ceil(centerX / tileSize) + i) * tileSize - centerX + 'px',
             'y1': '0px',
-            'x2': elCenterX + (Math.ceil(centerX / 100) + i) * 100 - centerX + 'px',
+            'x2': elCenterX + (Math.ceil(centerX / tileSize) + i) * tileSize - centerX + 'px',
             'y2': '100%',
             'stroke': 'black',
             'stroke-width': '1px',
@@ -68,18 +69,18 @@ export function drawTileBorder() {
         addSVGElement('line', {
             'class': 'tileborder',
             'x1': '0px',
-            'y1': elCenterY + (Math.floor(centerY / 100) + i) * 100 - centerY + 'px',
+            'y1': elCenterY + (Math.floor(centerY / tileSize) + i) * tileSize - centerY + 'px',
             'x2': '100%',
-            'y2': elCenterY + (Math.floor(centerY / 100) + i) * 100 - centerY + 'px',
+            'y2': elCenterY + (Math.floor(centerY / tileSize) + i) * tileSize - centerY + 'px',
             'stroke': 'black',
             'stroke-width': '1px',
         }, 1)
         addSVGElement('line', {
             'class': 'tileborder',
             'x1': '0px',
-            'y1': elCenterY + (Math.ceil(centerY / 100) + i) * 100 - centerY + 'px',
+            'y1': elCenterY + (Math.ceil(centerY / tileSize) + i) * tileSize - centerY + 'px',
             'x2': '100%',
-            'y2': elCenterY + (Math.ceil(centerY / 100) + i) * 100 - centerY + 'px',
+            'y2': elCenterY + (Math.ceil(centerY / tileSize) + i) * tileSize - centerY + 'px',
             'stroke': 'black',
             'stroke-width': '1px',
         }, 1)
