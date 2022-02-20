@@ -13,9 +13,13 @@ export function init() {
       setCenterY(startPosY - (e.clientY - elTop - dragStartPosY) * 2 ** -zoomLevel);
       draw();
     }
-    mapEl.addEventListener('mouseup', function fn() {
-      mapEl.removeEventListener('mouseup', fn);
+
+    mapEl.addEventListener('mouseup', end)
+    mapEl.addEventListener('mouseleave', end);
+    function end() {
+      mapEl.removeEventListener('mouseup', end);
+      mapEl.removeEventListener('mouseleave', end);
       mapEl.removeEventListener('mousemove', moveFn);
-    })
+    }
   })
 }
