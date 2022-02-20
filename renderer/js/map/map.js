@@ -36,6 +36,8 @@ export let setZoomLevel = val => {
 }
 
 export function draw() {
+  document.querySelectorAll('.object').forEach(item => item.remove());
+
   let tileX = Math.floor(centerX / tileSize);
   let tileY = Math.floor(centerY / tileSize);
 

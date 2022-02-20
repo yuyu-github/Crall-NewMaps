@@ -1,5 +1,5 @@
 import { backgroundType } from "../background/background.js";
-import { centerX, centerY, elCenterX, elCenterY, elLeft, elTop, mapEl } from "../map.js";
+import { centerX, centerY, elCenterX, elCenterY, elLeft, elTop, mapEl, zoomLevel } from "../map.js";
 import { draw } from "./draw.js";
 import { objects, points } from "./object.js";
 
@@ -42,16 +42,16 @@ export function init() {
       function fn(e) {
         end();
         objects.addPoint(hash, points.add({
-          x: e.clientX - elLeft - elCenterX + centerX,
-          y: e.clientY - elTop - elCenterY + centerY,
+          x: (e.clientX - elLeft - elCenterX) * 2 ** -zoomLevel + centerX,
+          y: (e.clientY - elTop - elCenterY) * 2 ** -zoomLevel+ centerY,
         }));
         object.isPreview = false;
         draw(object);
       }
 
       function moveFn(e) {
-        object.previewX = e.clientX - elLeft - elCenterX + centerX;
-        object.previewY = e.clientY - elTop - elCenterY + centerY;
+        object.previewX = (e.clientX - elLeft - elCenterX) * 2 ** -zoomLevel + centerX;
+        object.previewY = (e.clientY - elTop - elCenterY) * 2 ** -zoomLevel + centerY;
         draw(object);
       }
       mapEl.addEventListener('mousemove', moveFn)
@@ -97,8 +97,8 @@ export function init() {
       function clickFn(e) {
         mapEl.removeEventListener('mouseleave', leaveFn);
         objects.addPoint(hash, points.add({
-          x: e.clientX - elLeft - elCenterX + centerX, 
-          y: e.clientY - elTop - elCenterY + centerY,
+          x: (e.clientX - elLeft - elCenterX) * 2 ** -zoomLevel + centerX, 
+          y: (e.clientY - elTop - elCenterY) * 2 ** -zoomLevel + centerY,
         }));
         object.isPreview = false;
       }
@@ -109,8 +109,8 @@ export function init() {
       }
 
       function moveFn(e) {
-        object.previewX = e.clientX - elLeft - elCenterX + centerX;
-        object.previewY = e.clientY - elTop - elCenterY + centerY;
+        object.previewX = (e.clientX - elLeft - elCenterX) * 2 ** -zoomLevel + centerX;
+        object.previewY = (e.clientY - elTop - elCenterY) * 2 ** -zoomLevel + centerY;
         object.isPreview = true;
 
         let drawresult = draw(object);
@@ -165,8 +165,8 @@ export function init() {
       function clickFn(e) {
         mapEl.removeEventListener('mouseleave', leaveFn);
         objects.addPoint(hash, points.add({
-          x: e.clientX - elLeft - elCenterX + centerX, 
-          y: e.clientY - elTop - elCenterY + centerY,
+          x: (e.clientX - elLeft - elCenterX) * 2 ** -zoomLevel + centerX, 
+          y: (e.clientY - elTop - elCenterY) * 2 ** -zoomLevel + centerY,
         }));
         object.isPreview = false;
       }
@@ -178,8 +178,8 @@ export function init() {
       }
 
       function moveFn(e) {
-        object.previewX = e.clientX - elLeft - elCenterX + centerX;
-        object.previewY = e.clientY - elTop - elCenterY + centerY;
+        object.previewX = (e.clientX - elLeft - elCenterX) * 2 ** -zoomLevel + centerX;
+        object.previewY = (e.clientY - elTop - elCenterY) * 2 ** -zoomLevel + centerY;
         object.isPreview = true;
 
         let drawresult = draw(object);
