@@ -25,6 +25,7 @@ body {
 
 #edit-menu *:not(div) {
   background-color: var(--edit-menu-background-color);
+  user-select: none;
 }
 
 #edit-menu *:not(div):not(button) {
