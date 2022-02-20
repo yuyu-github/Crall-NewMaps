@@ -1,6 +1,5 @@
-import { tiles } from "../tile.js";
-
 import { init as initAddObject } from './add_object.js';
+import { tiles } from "../tile.js";
 
 export let points = {};
 export let objects = {};

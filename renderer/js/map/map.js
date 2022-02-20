@@ -1,9 +1,6 @@
-import { tiles, draw as drawTile, drawTileBorder, tileSize } from './tile.js';
-import { moveTo, setZoom } from './background/background.js';
-
 import { init as initDrag } from './drag.js';
-import { init as initBackground } from './background/background.js';
-import { init as initTile } from './tile.js';
+import { init as initBackground, moveTo, setZoom } from './background/background.js';
+import { init as initTile, tiles, draw as drawTile, drawTileBorder, tileSize } from './tile.js';
 import { init as initObject } from './object/object.js';
 import { init as initZoom } from './zoom.js';
 
