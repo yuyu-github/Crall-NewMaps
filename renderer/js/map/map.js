@@ -1,12 +1,11 @@
 import { tiles, draw as drawTile, drawTileBorder, tileSize } from './tile.js';
-import { moveTo } from './background/background.js';
+import { moveTo, setZoom } from './background/background.js';
 
 import { init as initDrag } from './drag.js';
 import { init as initBackground } from './background/background.js';
 import { init as initTile } from './tile.js';
 import { init as initObject } from './object/object.js';
 import { init as initZoom } from './zoom.js';
-import { setZoom } from './background/leaflet.js';
 
 export const mapEl = document.getElementById('map');
 export const elCenterX = mapEl.clientWidth / 2;
