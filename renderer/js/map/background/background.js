@@ -52,7 +52,7 @@ export function moveTo(x, y) {
 export function setZoom(zoomLevel) {
   switch (backgroundType) {
     case 'realitymap':
-      realityMapSetZoom(x, y);
+      realityMapSetZoom(zoomLevel);
       break;
   }
 }
