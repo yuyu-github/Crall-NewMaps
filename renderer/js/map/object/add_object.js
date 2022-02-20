@@ -6,230 +6,230 @@ import { objects, points } from "./object.js";
 export let isediting = false;
 
 export function init() {
-    document.getElementById('add-point').addEventListener('click', () => setTimeout(() => {
-        if (!isediting) {
-            isediting = true;
-            mapEl.style.cursor = 'crosshair';
+  document.getElementById('add-point').addEventListener('click', () => setTimeout(() => {
+    if (!isediting) {
+      isediting = true;
+      mapEl.style.cursor = 'crosshair';
 
-            let hash = addPoint([]);
-            let object = objects[hash];
-            object.isPreview = true;
+      let hash = addPoint([]);
+      let object = objects[hash];
+      object.isPreview = true;
 
-            function end() {
-                document.body.removeEventListener('click', bodyClickFn);
-                mapEl.removeEventListener('mouseenter', enterFn);
-                mapEl.removeEventListener('mouseleave', leaveFn);
-                mapEl.removeEventListener('click', fn);
-                mapEl.removeEventListener('mousemove', moveFn);
-                mapEl.style.cursor = 'default';
-                isediting = false;
-            }
+      function end() {
+        document.body.removeEventListener('click', bodyClickFn);
+        mapEl.removeEventListener('mouseenter', enterFn);
+        mapEl.removeEventListener('mouseleave', leaveFn);
+        mapEl.removeEventListener('click', fn);
+        mapEl.removeEventListener('mousemove', moveFn);
+        mapEl.style.cursor = 'default';
+        isediting = false;
+      }
 
-            mapEl.addEventListener('mouseleave', leaveFn);
-            function leaveFn() {
-                mapEl.addEventListener('mouseenter', enterFn);
-                document.body.addEventListener('click', bodyClickFn);
-            }
-            function bodyClickFn() {
-                end();
-                objects.delete(hash);
-            }
-            function enterFn() {
-                document.body.addEventListener('click', bodyClickFn);
-            }
+      mapEl.addEventListener('mouseleave', leaveFn);
+      function leaveFn() {
+        mapEl.addEventListener('mouseenter', enterFn);
+        document.body.addEventListener('click', bodyClickFn);
+      }
+      function bodyClickFn() {
+        end();
+        objects.delete(hash);
+      }
+      function enterFn() {
+        document.body.addEventListener('click', bodyClickFn);
+      }
 
-            mapEl.addEventListener('click', fn);
-            function fn(e) {
-                end();
-                objects.addPoint(hash, points.add({
-                    x: e.clientX - elLeft - elCenterX + centerX,
-                    y: e.clientY - elTop - elCenterY + centerY,
-                }));
-                object.isPreview = false;
-                draw(object);
-            }
+      mapEl.addEventListener('click', fn);
+      function fn(e) {
+        end();
+        objects.addPoint(hash, points.add({
+          x: e.clientX - elLeft - elCenterX + centerX,
+          y: e.clientY - elTop - elCenterY + centerY,
+        }));
+        object.isPreview = false;
+        draw(object);
+      }
 
-            function moveFn(e) {
-                object.previewX = e.clientX - elLeft - elCenterX + centerX;
-                object.previewY = e.clientY - elTop - elCenterY + centerY;
-                draw(object);
-            }
-            mapEl.addEventListener('mousemove', moveFn)
+      function moveFn(e) {
+        object.previewX = e.clientX - elLeft - elCenterX + centerX;
+        object.previewY = e.clientY - elTop - elCenterY + centerY;
+        draw(object);
+      }
+      mapEl.addEventListener('mousemove', moveFn)
+    }
+  }, 50))
+
+  document.getElementById('add-line').addEventListener('click', () => setTimeout(() => {
+    if (!isediting) {
+      mapEl.style.cursor = 'crosshair';
+      isediting = true;
+
+      let hash = addLine([], false)
+      let object = objects[hash];
+      let lastPoint = null;
+
+      function end() {
+        document.body.removeEventListener('click', bodyClickFn);
+        mapEl.removeEventListener('mouseenter', enterFn);
+        mapEl.removeEventListener('mouseleave', leaveFn);
+        mapEl.removeEventListener('click', clickFn);
+        lastPoint?.removeEventListener('click', finish);
+        mapEl.removeEventListener('mousemove', moveFn);
+        object.isPreview = false;
+        mapEl.style.cursor = 'default';
+        if (lastPoint != null) lastPoint.style.cursor = 'default';
+        isediting = false;
+      }
+
+      mapEl.addEventListener('mouseleave', leaveFn);
+      function leaveFn() {
+        mapEl.addEventListener('mouseenter', enterFn);
+        document.body.addEventListener('click', bodyClickFn);
+      }
+      function bodyClickFn() {
+        end();
+        objects.delete(hash);
+      }
+      function enterFn() {
+        document.body.addEventListener('click', bodyClickFn);
+      }
+
+      mapEl.addEventListener('click', clickFn);
+      function clickFn(e) {
+        mapEl.removeEventListener('mouseleave', leaveFn);
+        objects.addPoint(hash, points.add({
+          x: e.clientX - elLeft - elCenterX + centerX, 
+          y: e.clientY - elTop - elCenterY + centerY,
+        }));
+        object.isPreview = false;
+      }
+
+      function finish() {
+        end();
+        draw(object);
+      }
+
+      function moveFn(e) {
+        object.previewX = e.clientX - elLeft - elCenterX + centerX;
+        object.previewY = e.clientY - elTop - elCenterY + centerY;
+        object.isPreview = true;
+
+        let drawresult = draw(object);
+        if (drawresult[1].length > 1) {
+          lastPoint?.removeEventListener('click', finish)
+          if (lastPoint != null) lastPoint.style.cursor = 'default';
+          lastPoint = drawresult[1].slice(-1)[0];
+          lastPoint?.addEventListener('click', finish);
+          if (lastPoint != null) lastPoint.style.cursor = 'pointer';
         }
-    }, 50))
+      }
+      mapEl.addEventListener('mousemove', moveFn);
+    }
+  }, 50))
 
-    document.getElementById('add-line').addEventListener('click', () => setTimeout(() => {
-        if (!isediting) {
-            mapEl.style.cursor = 'crosshair';
-            isediting = true;
+  document.getElementById('add-area').addEventListener('click', () => setTimeout(() => {
+    if (!isediting) {
+      mapEl.style.cursor = 'crosshair';
+      isediting = true;
 
-            let hash = addLine([], false)
-            let object = objects[hash];
-            let lastPoint = null;
+      let hash = addArea([], false)
+      let object = objects[hash];
+      let firstPoint = null;
 
-            function end() {
-                document.body.removeEventListener('click', bodyClickFn);
-                mapEl.removeEventListener('mouseenter', enterFn);
-                mapEl.removeEventListener('mouseleave', leaveFn);
-                mapEl.removeEventListener('click', clickFn);
-                lastPoint?.removeEventListener('click', finish);
-                mapEl.removeEventListener('mousemove', moveFn);
-                object.isPreview = false;
-                mapEl.style.cursor = 'default';
-                if (lastPoint != null) lastPoint.style.cursor = 'default';
-                isediting = false;
-            }
+      function end() {
+        document.body.removeEventListener('click', bodyClickFn);
+        mapEl.removeEventListener('mouseenter', enterFn);
+        mapEl.removeEventListener('mouseleave', leaveFn);
+        mapEl.removeEventListener('click', clickFn);
+        firstPoint?.removeEventListener('click', finish);
+        mapEl.removeEventListener('mousemove', moveFn);
+        object.isPreview = false;
+        mapEl.style.cursor = 'default';
+        if (firstPoint != null) firstPoint.style.cursor = 'default';
+        isediting = false;
+      }
 
-            mapEl.addEventListener('mouseleave', leaveFn);
-            function leaveFn() {
-                mapEl.addEventListener('mouseenter', enterFn);
-                document.body.addEventListener('click', bodyClickFn);
-            }
-            function bodyClickFn() {
-                end();
-                objects.delete(hash);
-            }
-            function enterFn() {
-                document.body.addEventListener('click', bodyClickFn);
-            }
+      mapEl.addEventListener('mouseleave', leaveFn);
+      function leaveFn() {
+        mapEl.addEventListener('mouseenter', enterFn);
+        document.body.addEventListener('click', bodyClickFn);
+      }
+      function bodyClickFn() {
+        end();
+        objects.delete(hash);
+      }
+      function enterFn() {
+        document.body.addEventListener('click', bodyClickFn);
+      }
 
-            mapEl.addEventListener('click', clickFn);
-            function clickFn(e) {
-                mapEl.removeEventListener('mouseleave', leaveFn);
-                objects.addPoint(hash, points.add({
-                    x: e.clientX - elLeft - elCenterX + centerX, 
-                    y: e.clientY - elTop - elCenterY + centerY,
-                }));
-                object.isPreview = false;
-            }
+      mapEl.addEventListener('click', clickFn);
+      function clickFn(e) {
+        mapEl.removeEventListener('mouseleave', leaveFn);
+        objects.addPoint(hash, points.add({
+          x: e.clientX - elLeft - elCenterX + centerX, 
+          y: e.clientY - elTop - elCenterY + centerY,
+        }));
+        object.isPreview = false;
+      }
 
-            function finish() {
-                end();
-                draw(object);
-            }
+      function finish() {
+        end();
+        object.closed = true;
+        draw(object);
+      }
 
-            function moveFn(e) {
-                object.previewX = e.clientX - elLeft - elCenterX + centerX;
-                object.previewY = e.clientY - elTop - elCenterY + centerY;
-                object.isPreview = true;
+      function moveFn(e) {
+        object.previewX = e.clientX - elLeft - elCenterX + centerX;
+        object.previewY = e.clientY - elTop - elCenterY + centerY;
+        object.isPreview = true;
 
-                let drawresult = draw(object);
-                if (drawresult[1].length > 1) {
-                    lastPoint?.removeEventListener('click', finish)
-                    if (lastPoint != null) lastPoint.style.cursor = 'default';
-                    lastPoint = drawresult[1].slice(-1)[0];
-                    lastPoint?.addEventListener('click', finish);
-                    if (lastPoint != null) lastPoint.style.cursor = 'pointer';
-                }
-            }
-            mapEl.addEventListener('mousemove', moveFn);
+        let drawresult = draw(object);
+        if (drawresult[1].length > 2) {
+          firstPoint = drawresult[1][0];
+          firstPoint?.addEventListener('click', finish);
+          if (firstPoint != null) firstPoint.style.cursor = 'pointer'
         }
-    }, 50))
-
-    document.getElementById('add-area').addEventListener('click', () => setTimeout(() => {
-        if (!isediting) {
-            mapEl.style.cursor = 'crosshair';
-            isediting = true;
-
-            let hash = addArea([], false)
-            let object = objects[hash];
-            let firstPoint = null;
-
-            function end() {
-                document.body.removeEventListener('click', bodyClickFn);
-                mapEl.removeEventListener('mouseenter', enterFn);
-                mapEl.removeEventListener('mouseleave', leaveFn);
-                mapEl.removeEventListener('click', clickFn);
-                firstPoint?.removeEventListener('click', finish);
-                mapEl.removeEventListener('mousemove', moveFn);
-                object.isPreview = false;
-                mapEl.style.cursor = 'default';
-                if (firstPoint != null) firstPoint.style.cursor = 'default';
-                isediting = false;
-            }
-
-            mapEl.addEventListener('mouseleave', leaveFn);
-            function leaveFn() {
-                mapEl.addEventListener('mouseenter', enterFn);
-                document.body.addEventListener('click', bodyClickFn);
-            }
-            function bodyClickFn() {
-                end();
-                objects.delete(hash);
-            }
-            function enterFn() {
-                document.body.addEventListener('click', bodyClickFn);
-            }
-
-            mapEl.addEventListener('click', clickFn);
-            function clickFn(e) {
-                mapEl.removeEventListener('mouseleave', leaveFn);
-                objects.addPoint(hash, points.add({
-                    x: e.clientX - elLeft - elCenterX + centerX, 
-                    y: e.clientY - elTop - elCenterY + centerY,
-                }));
-                object.isPreview = false;
-            }
-
-            function finish() {
-                end();
-                object.closed = true;
-                draw(object);
-            }
-
-            function moveFn(e) {
-                object.previewX = e.clientX - elLeft - elCenterX + centerX;
-                object.previewY = e.clientY - elTop - elCenterY + centerY;
-                object.isPreview = true;
-
-                let drawresult = draw(object);
-                if (drawresult[1].length > 2) {
-                    firstPoint = drawresult[1][0];
-                    firstPoint?.addEventListener('click', finish);
-                    if (firstPoint != null) firstPoint.style.cursor = 'pointer'
-                }
-            }
-            mapEl.addEventListener('mousemove', moveFn);
-        }
-    }, 50))
+      }
+      mapEl.addEventListener('mousemove', moveFn);
+    }
+  }, 50))
 }
 
 export function addPoint(position) {
-    let linkedPoints = position.length != 0 ? [points.add({
-        x: position[0],
-        y: position[1],
-    })] : []
-    return objects.add({
-        type: 'point',
-        linkedPoints: linkedPoints,
-    });
+  let linkedPoints = position.length != 0 ? [points.add({
+    x: position[0],
+    y: position[1],
+  })] : []
+  return objects.add({
+    type: 'point',
+    linkedPoints: linkedPoints,
+  });
 }
 
 export function addLine(list) {
-    let linkedPoints = [];
-    for (let item of list) {
-        linkedPoints.push(points.add({
-            x: item[0],
-            y: item[1],
-        }))
-    }
-    return objects.add({
-        type: 'line',
-        linkedPoints: linkedPoints,
-    });
+  let linkedPoints = [];
+  for (let item of list) {
+    linkedPoints.push(points.add({
+      x: item[0],
+      y: item[1],
+    }))
+  }
+  return objects.add({
+    type: 'line',
+    linkedPoints: linkedPoints,
+  });
 }
 
 export function addArea(list, closed = true) {
-    let linkedPoints = [];
-    for (let item of list) {
-        linkedPoints.push(points.add({
-            x: item[0],
-            y: item[1],
-        }));
-    }
-    return objects.add({
-        type: 'area',
-        linkedPoints: linkedPoints,
-        closed: closed,
-    });
+  let linkedPoints = [];
+  for (let item of list) {
+    linkedPoints.push(points.add({
+      x: item[0],
+      y: item[1],
+    }));
+  }
+  return objects.add({
+    type: 'area',
+    linkedPoints: linkedPoints,
+    closed: closed,
+  });
 }

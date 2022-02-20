@@ -1,81 +1,81 @@
 body {
-    --edit-menu-height: 35px;
+  --edit-menu-height: 35px;
 
-    margin: 0;
-    overflow: hidden;
+  margin: 0;
+  overflow: hidden;
 }
 
 #edit-menu {
-    --edit-menu-background-color: #fafafa;
+  --edit-menu-background-color: #fafafa;
 
-    position: absolute;
-    display: flex;
-    align-items: center;
-    width: 100vw;
-    height: var(--edit-menu-height);
-    padding: 0 5px;
-    background-color: var(--edit-menu-background-color);
-    border-bottom: 1px lightgray solid;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: var(--edit-menu-height);
+  padding: 0 5px;
+  background-color: var(--edit-menu-background-color);
+  border-bottom: 1px lightgray solid;
 }
 
 #edit-menu div {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 #edit-menu *:not(div) {
-    background-color: var(--edit-menu-background-color);
+  background-color: var(--edit-menu-background-color);
 }
 
 #edit-menu *:not(div):not(button) {
-    margin: 0 2.5px;
+  margin: 0 2.5px;
 }
 
 #edit-menu p {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 #edit-menu button {
-    border: none;
-    font-size: 14px;
-    padding: 3px 4px;
+  border: none;
+  font-size: 14px;
+  padding: 3px 4px;
 }
 
 #edit-menu button:hover {
-    background-color: #e5e5e5;
+  background-color: #e5e5e5;
 }
 
 #edit-menu select {
-    padding: 2px;
-    border: 1px solid black;
-    background-color: white;
+  padding: 2px;
+  border: 1px solid black;
+  background-color: white;
 }
 
 #background-setting > select {
-    width: 180px;
+  width: 180px;
 }
 
 #map-area {
-    position: absolute;
-    top: var(--edit-menu-height);
-    width: 100vw;
-    height: calc(100vh - var(--edit-menu-height));
+  position: absolute;
+  top: var(--edit-menu-height);
+  width: 100vw;
+  height: calc(100vh - var(--edit-menu-height));
 }
 
 #background {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 #background-leaflet {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 #map {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
