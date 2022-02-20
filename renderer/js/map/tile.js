@@ -1,4 +1,4 @@
-import { elCenterX, elCenterY, centerX, centerY, addSVGElement } from './map.js';
+import { elCenterX, elCenterY, centerX, centerY, addSVGElement, zoomLevel, elHeight, elWidth } from './map.js';
 import { points, objects } from './object/object.js';
 import { draw as drawObject } from './object/draw.js';
 
@@ -54,40 +54,29 @@ export function draw(tile, drew) {
 
 export function drawTileBorder() {
   document.querySelectorAll('.tileborder').forEach(item => item.remove());
-  for (let i = -6; i <= 6; i++) {
+
+  const horizontalCount = elWidth / (tileSize * 2 ** zoomLevel) + 1;
+  const verticalCount = elHeight / (tileSize * 2 ** zoomLevel) + 1;
+  let displayTileSize = tileSize * 2 ** zoomLevel
+
+  for (let i = -horizontalCount; i <= horizontalCount; i++) {
     addSVGElement('line', {
       'class': 'tileborder',
-      'x1': elCenterX + (Math.floor(centerX / tileSize) + i) * tileSize - centerX + 'px',
+      'x1': elCenterX + (Math.floor(centerX / displayTileSize) + i) * displayTileSize - centerX + 'px',
       'y1': '0px',
-      'x2': elCenterX + (Math.floor(centerX / tileSize) + i) * tileSize - centerX + 'px',
+      'x2': elCenterX + (Math.floor(centerX / displayTileSize) + i) * displayTileSize - centerX + 'px',
       'y2': '100%',
       'stroke': 'black',
       'stroke-width': '1px',
     }, 1)
-    addSVGElement('line', {
-      'class': 'tileborder',
-      'x1': elCenterX + (Math.ceil(centerX / tileSize) + i) * tileSize - centerX + 'px',
-      'y1': '0px',
-      'x2': elCenterX + (Math.ceil(centerX / tileSize) + i) * tileSize - centerX + 'px',
-      'y2': '100%',
-      'stroke': 'black',
-      'stroke-width': '1px',
-    }, 1)
+  }
+  for (let i = -verticalCount; i <= verticalCount; i++) {
     addSVGElement('line', {
       'class': 'tileborder',
       'x1': '0px',
-      'y1': elCenterY + (Math.floor(centerY / tileSize) + i) * tileSize - centerY + 'px',
+      'y1': elCenterY + (Math.floor(centerY / displayTileSize) + i) * displayTileSize - centerY + 'px',
       'x2': '100%',
-      'y2': elCenterY + (Math.floor(centerY / tileSize) + i) * tileSize - centerY + 'px',
-      'stroke': 'black',
-      'stroke-width': '1px',
-    }, 1)
-    addSVGElement('line', {
-      'class': 'tileborder',
-      'x1': '0px',
-      'y1': elCenterY + (Math.ceil(centerY / tileSize) + i) * tileSize - centerY + 'px',
-      'x2': '100%',
-      'y2': elCenterY + (Math.ceil(centerY / tileSize) + i) * tileSize - centerY + 'px',
+      'y2': elCenterY + (Math.floor(centerY / displayTileSize) + i) * displayTileSize - centerY + 'px',
       'stroke': 'black',
       'stroke-width': '1px',
     }, 1)
