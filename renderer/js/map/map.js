@@ -6,11 +6,6 @@ import { init as initBackground } from './background.js';
 import { init as initTile } from './tile.js';
 import { init as initObject } from './object/object.js';
 
-export * from './drag.js';
-export * from './background.js';
-export * from './tile.js'
-export * from './object/object.js';
-
 export const mapEl = document.getElementById('map');
 export const elCenterX = mapEl.clientWidth / 2;
 export const elCenterY = mapEl.clientHeight / 2;
