@@ -1,4 +1,4 @@
-import { centerX, centerY } from "./map.js";
+import { centerX, centerY } from "../map.js";
 
 export let background = document.querySelector('#background-setting > select').value;
 export let backgroundType = '';
