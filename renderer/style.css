@@ -67,12 +67,7 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-}
-
-#background-leaflet {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  user-select: none;
 }
 
 #map {
