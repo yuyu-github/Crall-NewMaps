@@ -1,8 +1,8 @@
 import { centerX, centerY } from "../map.js";
 import { backgroundType, setBackgroundType, backgroundObj, setBackgroundObj } from "./background.js";
 
-export const latScale = 0.000004353;
-export const lngScale = 0.000005363;
+export const latScale = 0.000069648;
+export const lngScale = 0.000085808;
 
 export function loadLeaflet() {
   if (document.getElementById('leaflet-style') == null) {
