@@ -40,10 +40,12 @@ export function draw() {
 
   let tileX = Math.floor(centerX / tileSize);
   let tileY = Math.floor(centerY / tileSize);
+  const horizontalCount = elWidth / (tileSize * 2 ** zoomLevel) + 1;
+  const verticalCount = elHeight / (tileSize * 2 ** zoomLevel) + 1;
 
   let drew = [];
-  for (let i = tileX - 2; i <= tileX + 2; i++) {
-    for (let j = tileY - 1; j <= tileY + 1; j++) {
+  for (let i = tileX - Math.floor(horizontalCount / 2); i <= tileX + Math.floor(horizontalCount / 2); i++) {
+    for (let j = tileY - Math.floor(verticalCount / 2); j <= tileY + Math.floor(verticalCount / 2); j++) {
       drew = drawTile(tiles.get(i, j), drew);
     }
   }
