@@ -1,6 +1,9 @@
 import { centerX, centerY } from "../map.js";
 import { backgroundType, setBackgroundType, backgroundObj, setBackgroundObj } from "./background.js";
 
+export const latScale = 0.000004353;
+export const lngScale = 0.000005363;
+
 export function loadLeaflet() {
   if (document.getElementById('leaflet-style') == null) {
     let el = document.createElement('link');
@@ -42,10 +45,9 @@ export function loadMap(url, options, zoom = options['maxZoom'] ?? 18) {
   }, 5);
 }
 
-export function moveTo(x, y) {
-  const latScale = 0.000004353;
-  const lngScale = 0.000005363;
+export let getLatLng = (x, y) => [35.6809591 - y * latScale, 139.7673068 + x * lngScale]
 
+export function moveTo(x, y) {
   switch (backgroundType) {
     case 'worldmap': {
       backgroundObj.panTo([35.6809591 - y * latScale, 139.7673068 + x * lngScale], { animate: false });
