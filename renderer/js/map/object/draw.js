@@ -21,7 +21,7 @@ export function draw(object) {
           'fill': 'red',
           'fill-opacity': object.isPreview ? '0.15' : '0.3',
           'style': object.isPreview ? 'pointer-events: none;' : '',
-        }, 4);
+        }, 20002);
       } else return null;
     }
     case 'line': {
@@ -37,7 +37,7 @@ export function draw(object) {
           'stroke': 'black',
           'stroke-width': '0.5px',
           'fill': 'lightgray',
-        }, 3));
+        }, 20003));
         if (previousPoint != null) {
           returnValue[0].push(addSVGElement('line', {
             'class': className,
@@ -49,7 +49,7 @@ export function draw(object) {
             'stroke-width': '4px',
             'stroke-opacity': object.isPreview && i == object.linkedPoints.length ? '0.5' : '1',
             'style': object.isPreview && i == object.linkedPoints.length ? 'pointer-events: none;' : '',
-          }, 1));
+          }, 20001));
         }
         previousPoint = point;
       });
@@ -69,7 +69,7 @@ export function draw(object) {
           'stroke': 'black',
           'stroke-width': '0.5px',
           'fill': 'lightgray',
-        }, 2));
+        }, 20003));
         if (object.closed) pathD += ` ${elCenterX + (point.x - centerX) * 2 ** zoomLevel},${elCenterY + (point.y - centerY) * 2 ** zoomLevel}`;
         else {
           if (previousPoint != null) {
@@ -83,7 +83,7 @@ export function draw(object) {
               'stroke-width': '4px',
               'stroke-opacity': object.isPreview && i == object.linkedPoints.length ? '0.5' : '1',
               'style': object.isPreview && i == object.linkedPoints.length ? 'pointer-events: none;' : '',
-            }, 1));
+            }, 20000));
           }
           previousPoint = point;
         }
@@ -97,7 +97,7 @@ export function draw(object) {
           'stroke-width': '4px',
           'fill': 'limegreen',
           'fill-opacity': '0.3',
-        }, 0)
+        }, 20000)
       }
       return returnValue;
     }
