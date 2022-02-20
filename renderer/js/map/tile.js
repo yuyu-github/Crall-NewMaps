@@ -3,7 +3,7 @@ import { points, objects } from './object/object.js';
 import { draw as drawObject } from './object/draw.js';
 
 export let tiles = [];
-export const tileSize = 500;
+export const tileSize = 1000;
 
 export function init() {
   tiles.addObject = hash => {
