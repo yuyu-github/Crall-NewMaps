@@ -1,5 +1,5 @@
 import { tiles, draw as drawTile, drawTileBorder, tileSize } from './tile.js';
-import { moveTo } from './background/leaflet.js';
+import { moveTo } from './background/background.js';
 
 import { init as initDrag } from './drag.js';
 import { init as initBackground } from './background/background.js';

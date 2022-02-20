@@ -1,4 +1,4 @@
-import { loadMap } from "./leaflet.js";
+import { loadMap, moveTo as worldMapMoveTo } from "./leaflet.js";
 
 export let background = document.querySelector('#background-setting > select').value;
 export let backgroundType = '';
@@ -37,6 +37,14 @@ export function setBackground(name) {
                 maxZoom: ({'blank': 14})[background.replace(/^gsi-map-?/, '')] ?? 18,
                 minZoom: ({'photo': 2, 'pale': 2, 'blank': 5})[background.replace(/^gsi-map-?/, '')] ?? 0,
             })
+            break;
+    }
+}
+
+export function moveTo(x, y) {
+    switch (backgroundType) {
+        case 'worldmap':
+            worldMapMoveTo(x, y);
             break;
     }
 }

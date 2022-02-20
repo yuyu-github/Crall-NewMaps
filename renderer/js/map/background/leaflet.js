@@ -48,9 +48,5 @@ export function loadMap(url, options, zoom = options['maxZoom'] ?? 18) {
 export let getLatLng = (x, y) => [35.6809591 - y * latScale, 139.7673068 + x * lngScale]
 
 export function moveTo(x, y) {
-  switch (backgroundType) {
-    case 'worldmap': {
-      backgroundObj.panTo([35.6809591 - y * latScale, 139.7673068 + x * lngScale], { animate: false });
-    }
-  }
+  backgroundObj.panTo([35.6809591 - y * latScale, 139.7673068 + x * lngScale], { animate: false });
 }
