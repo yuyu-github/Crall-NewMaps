@@ -40,6 +40,7 @@ export function loadMap(url, options, zoom = options['maxZoom'] ?? 18) {
       L.tileLayer(url, options).addTo(backgroundObj);
 
       moveTo(centerX, centerY);
+      setZoom(0);
     }
     catch {}
   }, 5);
@@ -49,4 +50,8 @@ export let getLatLng = (x, y) => [35.6809591 - y * latScale, 139.7673068 + x * l
 
 export function moveTo(x, y) {
   backgroundObj.panTo([35.6809591 - y * latScale, 139.7673068 + x * lngScale], { animate: false });
+}
+
+export function setZoom(zoomLevel) {
+  backgroundObj.setZoom(zoomLevel + 14, { animate: false });
 }

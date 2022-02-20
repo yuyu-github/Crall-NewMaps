@@ -1,8 +1,8 @@
-import { mapEl, zoomLevel, setZoomLevel } from "./map.js";
+import { mapEl, zoomLevel, setZoomLevel, draw } from "./map.js";
 
 export function init() {
   mapEl.addEventListener('wheel', e => {
     setZoomLevel(zoomLevel - e.deltaY / 100);
-    console.log(zoomLevel);
+    draw();
   })
 }

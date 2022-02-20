@@ -6,6 +6,7 @@ import { init as initBackground } from './background/background.js';
 import { init as initTile } from './tile.js';
 import { init as initObject } from './object/object.js';
 import { init as initZoom } from './zoom.js';
+import { setZoom } from './background/leaflet.js';
 
 export const mapEl = document.getElementById('map');
 export const elCenterX = mapEl.clientWidth / 2;
@@ -46,6 +47,7 @@ export function draw() {
     }
 
     moveTo(centerX, centerY);
+    setZoom(zoomLevel)
 }
 
 export function createSVGElement(name, attrs) {
