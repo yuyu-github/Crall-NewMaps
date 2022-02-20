@@ -1,4 +1,4 @@
-import { loadMap, moveTo as worldMapMoveTo, setZoom as worldMapSetZoom } from "./leaflet.js";
+import { loadMap, moveTo as realityMapMoveTo, setZoom as realityMapSetZoom } from "./leaflet.js";
 
 export let background = document.querySelector('#background-setting > select').value;
 export let backgroundType = '';
@@ -43,16 +43,16 @@ export function setBackground(name) {
 
 export function moveTo(x, y) {
   switch (backgroundType) {
-    case 'worldmap':
-      worldMapMoveTo(x, y);
+    case 'realitymap':
+      realityMapMoveTo(x, y);
       break;
   }
 }
 
 export function setZoom(zoomLevel) {
   switch (backgroundType) {
-    case 'worldmap':
-      worldMapSetZoom(x, y);
+    case 'realitymap':
+      realityMapSetZoom(x, y);
       break;
   }
 }
