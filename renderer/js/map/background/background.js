@@ -1,4 +1,4 @@
-import { centerX, centerY } from "../map.js";
+import { loadMap } from "./leaflet.js";
 
 export let background = document.querySelector('#background-setting > select').value;
 export let backgroundType = '';
@@ -6,48 +6,10 @@ export let backgroundObj = null;
 
 export let init = () => document.querySelector('#background-setting > select').addEventListener('change', e => setBackground(e.currentTarget.value));
 
+export let setBackgroundType = val => backgroundType = val;
+export let setBackgroundObj = val => backgroundObj = val;
+
 export function setBackground(name) {
-    function loadLeaflet() {
-        if (document.getElementById('leaflet-style') == null) {
-            let el = document.createElement('link');
-            el.id = 'leaflet-style';
-            el.rel = 'stylesheet';
-            el.href = 'http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css';
-            document.head.appendChild(el);
-        }
-        if (document.getElementById('leaflet-script') == null) {
-            let el = document.createElement('script');
-            el.id = 'leaflet-script';
-            el.src = 'http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js';
-            document.head.appendChild(el);
-        }
-    }
-
-    function loadMap(url, options, zoom = options['maxZoom'] ?? 18) {
-        loadLeaflet();
-        //スクリプトが読み込めるまで繰り返す
-        id = setInterval(() => {
-            try {
-                //Lがあるか確認
-                L;
-                //インターバルを削除
-                clearInterval(id);
-
-                //地図読み込み
-                backgroundType = 'worldmap'
-                backgroundObj = L.map('background', {
-                    center: [0, 0],
-                    zoom: zoom,
-                    zoomControl: false,
-                });
-                L.tileLayer(url, options).addTo(backgroundObj);
-
-                moveTo(centerX, centerY);
-            }
-            catch {}
-        }, 5);
-    }
-
     backgroundObj?.remove();
     document.getElementById('background').innerHTML = '';
     document.getElementById('background').getAttributeNames().forEach(item => {
@@ -56,7 +18,6 @@ export function setBackground(name) {
     backgroundType = '';
     backgroundObj = null;
 
-    let id;
     switch (background) {
         case '':
             break;
@@ -77,16 +38,5 @@ export function setBackground(name) {
                 minZoom: ({'photo': 2, 'pale': 2, 'blank': 5})[background.replace(/^gsi-map-?/, '')] ?? 0,
             })
             break;
-    }
-}
-
-export function moveTo(x, y) {
-    const latScale = 0.000004353;
-    const lngScale = 0.000005363;
-
-    switch (backgroundType) {
-        case 'worldmap': {
-            backgroundObj.panTo([35.6809591 - y * latScale, 139.7673068 + x * lngScale], { animate: false });
-        }
     }
 }

@@ -1,4 +1,4 @@
-import { backgroundType } from "../background.js";
+import { backgroundType } from "../background/background.js";
 import { centerX, centerY, elCenterX, elCenterY, elLeft, elTop, mapEl } from "../map.js";
 import { draw } from "./draw.js";
 import { objects, points } from "./object.js";
