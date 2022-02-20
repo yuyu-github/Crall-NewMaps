@@ -32,6 +32,11 @@ body {
   margin: 0 2.5px;
 }
 
+#edit-menu .disabled:not(div) {
+  color: gray;
+  pointer-events: none;
+}
+
 #edit-menu p {
   font-size: 14px;
 }
@@ -42,7 +47,7 @@ body {
   padding: 3px 4px;
 }
 
-#edit-menu button:hover {
+#edit-menu button:hover:not(.disabled) {
   background-color: #e5e5e5;
 }
 
