@@ -70,7 +70,7 @@ export function draw(object) {
           'stroke-width': '0.5px',
           'fill': 'lightgray',
         }, 2));
-        if (object.closed) pathD += ` ${elCenterX + point.x - centerX},${elCenterY + point.y - centerY}`;
+        if (object.closed) pathD += ` ${elCenterX + (point.x - centerX) * 2 ** zoomLevel},${elCenterY + (point.y - centerY) * 2 ** zoomLevel}`;
         else {
           if (previousPoint != null) {
             returnValue[0].push(addSVGElement('line', {
