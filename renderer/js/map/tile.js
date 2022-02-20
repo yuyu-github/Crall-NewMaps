@@ -59,7 +59,7 @@ export function drawTileBorder() {
   const verticalCount = elHeight / (tileSize * 2 ** zoomLevel) + 1;
   let displayTileSize = tileSize * 2 ** zoomLevel
 
-  for (let i = -(horizontalCount / 2); i <= horizontalCount / 2; i++) {
+  for (let i = -Math.floor(horizontalCount / 2); i <= Math.floor(horizontalCount / 2); i++) {
     addSVGElement('line', {
       'class': 'tileborder',
       'x1': elCenterX + (Math.floor(centerX / displayTileSize) + i) * displayTileSize - centerX + 'px',
@@ -70,7 +70,7 @@ export function drawTileBorder() {
       'stroke-width': '1px',
     }, 1)
   }
-  for (let i = -(verticalCount / 2); i <= verticalCount / 2; i++) {
+  for (let i = -Math.floor(verticalCount / 2); i <= Math.floor(verticalCount) / 2; i++) {
     addSVGElement('line', {
       'class': 'tileborder',
       'x1': '0px',
