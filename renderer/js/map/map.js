@@ -5,6 +5,7 @@ import { init as initDrag } from './drag.js';
 import { init as initBackground } from './background.js';
 import { init as initTile } from './tile.js';
 import { init as initObject } from './object/object.js';
+import { init as initZoom } from './zoom.js';
 
 export const mapEl = document.getElementById('map');
 export const elCenterX = mapEl.clientWidth / 2;
@@ -15,16 +16,23 @@ export const elTop = mapEl.getBoundingClientRect().top;
 export const elLeft = mapEl.getBoundingClientRect().left;
 export let centerX = 0;
 export let centerY = 0;
+export let zoomLevel = 0;
 
 export function init() {
     initDrag();
     initBackground();
     initTile();
     initObject();
+    initZoom();
 }
 
 export let setCenterX = val => centerX = val;
 export let setCenterY = val => centerY = val;
+export let setZoomLevel = val => {
+    if (val > 4) zoomLevel = 4;
+    else if (val < -14) zoomLevel = -14;
+    else zoomLevel = val;
+}
 
 export function draw() {
     let tileX = Math.floor(centerX / tileSize);
