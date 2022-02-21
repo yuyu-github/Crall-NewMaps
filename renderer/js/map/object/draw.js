@@ -57,7 +57,7 @@ export function draw(object) {
     }
     case 'area': {
       let returnValue = [[], []];
-      let pathD = 'M';
+      let SVGPoints = '';
       let previousPoint = null;
       [...object.linkedPoints, ...(object.isPreview ? [null] : [])].forEach((hash, i) => {
         let point = points[hash];
@@ -70,7 +70,7 @@ export function draw(object) {
           'stroke-width': '0.5px',
           'fill': 'lightgray',
         }, 20003));
-        if (object.closed) pathD += ` ${elCenterX + (point.x - centerX) * 2 ** zoomLevel},${elCenterY + (point.y - centerY) * 2 ** zoomLevel}`;
+        if (object.closed) SVGPoints += `${elCenterX + (point.x - centerX) * 2 ** zoomLevel},${elCenterY + (point.y - centerY) * 2 ** zoomLevel} `;
         else {
           if (previousPoint != null) {
             returnValue[0].push(addSVGElement('line', {
@@ -89,10 +89,9 @@ export function draw(object) {
         }
       });
       if (object.closed) {
-        pathD += ' z';
-        returnValue[0] = addSVGElement('path', {
+        returnValue[0] = addSVGElement('polygon', {
           'class': className,
-          'd': pathD,
+          'points': SVGPoints,
           'stroke': 'limegreen',
           'stroke-width': '4px',
           'fill': 'limegreen',
