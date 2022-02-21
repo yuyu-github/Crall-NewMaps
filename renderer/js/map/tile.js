@@ -9,21 +9,29 @@ export function init() {
   tiles.addObject = hash => {
     for (let item of objects[hash]?.linkedPoints ?? []) {
       let point = points[item];
-      let x = Math.floor((point?.x ?? 0) / tileSize) + 1000000000000;
-      let y = Math.floor((point?.y ?? 0) / tileSize) + 1000000000000;
-      if (tiles[x] == undefined) tiles[x] = [];
-      if (tiles[x][y] == undefined) tiles[x][y] = [];
+      let x = Math.floor((point?.x ?? 0) / tileSize);
+      let y = Math.floor((point?.y ?? 0) / tileSize);
 
-      if (!tiles[x][y].includes(hash)) {
-        tiles[x][y].push(hash);
-        objects[hash].linkedTiles ??= [];
-        objects[hash].linkedTiles.push([x, y]);
-      }
+      addObjectTo(x, y, hash);
     }
   }
 
   tiles.get = (x, y) => {
-    return tiles[x + 1000000000000]?.[y + 1000000000000] ?? [];
+    let tileX = x + 1000000000000;
+    let tileY = y + 1000000000000;
+
+    if (tiles[tileX] == undefined) tiles[tileX] = [];
+    if (tiles[tileX][tileY] == undefined) tiles[tileX][tileY] = [];
+    return tiles[tileX][tileY];
+  }
+}
+
+export function addObjectTo(x, y, hash) {
+  let tile = tiles.get(x, y);
+  if (!tile.includes(hash)) {
+    tile.push(hash);
+    objects[hash].linkedTiles ??= [];
+    objects[hash].linkedTiles.push([x, y]);
   }
 }
 
