@@ -28,6 +28,7 @@ export function init() {
       list.push(hash)
       points[item]['linkedObjects'] = list;
     }
+    //タイルに追加
     tiles.addObject(hash);
     return hash;
   }
@@ -39,7 +40,7 @@ export function init() {
     let list = points[pointHash]?.['linkedObjects'] ?? [];
     list.push(objectHash);
     points[pointHash]['linkedObjects'] = list;
-    tiles.addPoint(objectHash, pointHash);
+    tiles.addObject(objectHash, pointHash);
   }
 
   objects.delete = hash => {

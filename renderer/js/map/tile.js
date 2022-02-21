@@ -7,33 +7,18 @@ export const tileSize = 1000;
 
 export function init() {
   tiles.addObject = hash => {
-    let addedTiles = [];
     for (let item of objects[hash]?.linkedPoints ?? []) {
       let point = points[item];
       let x = Math.floor((point?.x ?? 0) / tileSize) + 1000000000000;
       let y = Math.floor((point?.y ?? 0) / tileSize) + 1000000000000;
-      if (!addedTiles.includes([x, y].join(','))) {
-        if (tiles[x] == undefined) tiles[x] = [];
-        if (tiles[x][y] == undefined) tiles[x][y] = [];
+      if (tiles[x] == undefined) tiles[x] = [];
+      if (tiles[x][y] == undefined) tiles[x][y] = [];
+
+      if (!tiles[x][y].includes(hash)) {
         tiles[x][y].push(hash);
         objects[hash].linkedTiles ??= [];
         objects[hash].linkedTiles.push([x, y]);
-        addedTiles.push([x, y].join(','));
       }
-    }
-  }
-
-  tiles.addPoint = (objectHash, pointHash) => {
-    let point = points[pointHash];
-    let x = Math.floor((point?.x ?? 0) / tileSize) + 1000000000000;
-    let y = Math.floor((point?.y ?? 0) / tileSize) + 1000000000000;
-    if (tiles[x] == undefined) tiles[x] = [];
-    if (tiles[x][y] == undefined) tiles[x][y] = [];
-    
-    if (!tiles[x][y].includes(objectHash)) {
-      tiles[x][y].push(objectHash);
-      objects[objectHash].linkedTiles ??= [];
-      objects[objectHash].linkedTiles.push([x, y]);
     }
   }
 
