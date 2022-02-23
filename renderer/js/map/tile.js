@@ -50,28 +50,27 @@ export function drawTileBorder() {
 
   const horizontalCount = elWidth / (tileSize * 2 ** zoomLevel) + 1;
   const verticalCount = elHeight / (tileSize * 2 ** zoomLevel) + 1;
-  let displayTileSize = tileSize * 2 ** zoomLevel
 
   for (let i = -Math.floor(horizontalCount / 2); i <= Math.floor(horizontalCount / 2); i++) {
     addSVGElement('line', {
       'class': 'tileborder',
-      'x1': elCenterX + (Math.floor(centerX / displayTileSize) + i) * displayTileSize - centerX + 'px',
+      'x1': elCenterX + ((Math.floor(centerX / tileSize) + i) * tileSize - centerX) * 2 ** zoomLevel + 'px',
       'y1': '0px',
-      'x2': elCenterX + (Math.floor(centerX / displayTileSize) + i) * displayTileSize - centerX + 'px',
+      'x2': elCenterX + ((Math.floor(centerX / tileSize) + i) * tileSize - centerX) * 2 ** zoomLevel + 'px',
       'y2': '100%',
       'stroke': 'black',
       'stroke-width': '1px',
-    }, 1)
+    }, 30001)
   }
   for (let i = -Math.floor(verticalCount / 2); i <= Math.floor(verticalCount) / 2; i++) {
     addSVGElement('line', {
       'class': 'tileborder',
       'x1': '0px',
-      'y1': elCenterY + (Math.floor(centerY / displayTileSize) + i) * displayTileSize - centerY + 'px',
+      'y1': elCenterY + ((Math.floor(centerY / tileSize) + i) * tileSize - centerY) * 2 ** zoomLevel + 'px',
       'x2': '100%',
-      'y2': elCenterY + (Math.floor(centerY / displayTileSize) + i) * displayTileSize - centerY + 'px',
+      'y2': elCenterY + ((Math.floor(centerY / tileSize) + i) * tileSize - centerY) * 2 ** zoomLevel + 'px',
       'stroke': 'black',
       'stroke-width': '1px',
-    }, 1)
+    }, 30001)
   }
 }
