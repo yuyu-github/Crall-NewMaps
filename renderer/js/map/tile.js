@@ -7,12 +7,65 @@ export const tileSize = 1000;
 
 export function init() {
   tiles.addObject = hash => {
-    for (let item of objects[hash]?.linkedPoints ?? []) {
+    let object = objects[hash];
+    let type = object.type;
+
+    //pointの座標を記録
+    let pointPos = [];
+    for (let item of object?.linkedPoints ?? []) {
       let point = points[item];
       let x = Math.floor((point?.x ?? 0) / tileSize);
       let y = Math.floor((point?.y ?? 0) / tileSize);
 
       addObjectTo(x, y, hash);
+      pointPos.push({ x: point?.x, y: point?.y });
+    }
+
+    if (type == 'line' || type == 'area') {
+      //一つの直線ごとに実行
+      for (let i = 0; i < pointPos.length - 1; i++) {
+        let startPointPos = pointPos[i];
+        let endPointPos = pointPos[i + 1];
+
+        let length = {
+          x: endPointPos.x - startPointPos.x,
+          y: endPointPos.y - startPointPos.y
+        };
+
+        let longer = Math.abs(length.x) > Math.abs(length.y) ? 'x' : 'y';
+        let shorter = Math.abs(length.x) < Math.abs(length.y) ? 'x' : 'y';
+
+        //longerに対するshorterの移動量の割合
+        let movingRate = Math.abs(length[shorter] / length[longer]);
+        if (Number.isNaN(movingRate)) movingRate = 1;
+
+        //最も近いタイルの境界を通る地点を求める
+        let remainder = Math.abs(startPointPos[longer]) % tileSize;
+        let rangeToTile = ((length[longer] >= 0 ^ startPointPos[longer] <= 0 ? tileSize : 0
+          /*正の方向へ動いている場合左端、負の方向の場合は右端までの距離*/) - remainder) *
+          (startPointPos[longer] >= 0 ? 1 : -1 /*始点が負の位置の場合、マイナスにする*/);
+        let startPosOnTileBorder = {}; //最も近いタイルの境界上にある点
+        startPosOnTileBorder[longer] = startPointPos[longer] + rangeToTile;
+        startPosOnTileBorder[shorter] = startPointPos[shorter] + rangeToTile * movingRate;
+
+        let previousPos;
+        for (let pos = startPosOnTileBorder; length[longer] >= 0 ^ pos[longer] > endPointPos[longer];) {
+          previousPos = { ...pos };
+          pos[longer] += (length[longer] >= 0 ? tileSize : -tileSize);
+          pos[shorter] += (length[shorter] >= 0 ? tileSize : -tileSize) * movingRate;
+          
+          let negativeBorder = (length[longer] >= 0 ? pos[longer] - tileSize : pos[longer]) //負の方向のタイル境界の座標
+          let tilePos = {};
+          tilePos[longer] = Math.floor(negativeBorder / tileSize);
+          tilePos[shorter] = Math.floor(pos[shorter] / tileSize);
+
+          addObjectTo(tilePos.x, tilePos.y, hash);
+          if (Math.floor(previousPos[shorter] / tileSize) != tilePos[shorter] /*shorterが違った場合、隣のタイルにも追加*/) {
+            addObjectTo(tilePos.x, tilePos.y + (length[shorter] < 0 ? 1 : -1), hash);
+            addObjectTo(tilePos.x, tilePos.y + (length[longer] < 0 ? 1 : -1), hash);
+          }
+        }
+      }
     }
   }
 
