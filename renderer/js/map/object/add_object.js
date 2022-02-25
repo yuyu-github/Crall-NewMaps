@@ -174,6 +174,7 @@ export function init() {
       function finish() {
         end();
         object.closed = true;
+        objects.update(hash);
         draw(object);
       }
 

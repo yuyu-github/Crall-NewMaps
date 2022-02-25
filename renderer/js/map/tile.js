@@ -10,8 +10,10 @@ export function init() {
     let object = objects[hash];
     let type = object.type;
 
-    //pointの座標を記録
-    let pointPos = [];
+    let pointPos = []; //pointの位置を記録
+    let tileWithLine = []; //lineのあるタイルを記録
+
+    let firstPointPos;
     for (let item of object?.linkedPoints ?? []) {
       let point = points[item];
       let x = Math.floor((point?.x ?? 0) / tileSize);
@@ -19,7 +21,10 @@ export function init() {
 
       addObjectTo(x, y, hash);
       pointPos.push({ x: point?.x, y: point?.y });
+      tileWithLine.push([x, y]);
+      if (firstPointPos == undefined) firstPointPos = { x: point?.x, y: point?.y }
     }
+    if (type == 'area') pointPos.push(firstPointPos);
 
     if (type == 'line' || type == 'area') {
       //一つの直線ごとに実行
@@ -71,15 +76,34 @@ export function init() {
       }
     }
 
-    if (type == 'area') {
+    if (type == 'area' && object.closed) {
       //タイルを位置ごとに配列に入れる
       let tilePosList = [];
+      let minIndexY = 0;
       for (let tile of tileWithLine) {
         tilePosList[parseInt(tile[0]) + 10000] ??= [];
         tilePosList[parseInt(tile[0]) + 10000][parseInt(tile[1]) + 10000] = true;
+
+        if (minIndexY > parseInt(tile[1]) + 10000) minIndexY = parseInt(tile[1]) + 10000;
       }
 
-      console.log(tilePosList);
+      tilePosList.forEach((tileColumn, i) => {
+        let previousTilePos = -2;
+        let inArea = false;
+        tileColumn.forEach((tile, j) => {
+          if (previousTilePos + 1 != j /*隣り合っていない場合*/) {
+            inArea = !inArea;
+
+            if (!inArea) {
+              for (let k = previousTilePos + 1; k < j; k++) {
+                addObjectTo(i - 10000, k - 10000, hash); //間のタイルすべてに追加
+              }
+            }
+          }
+          
+          previousTilePos = j;
+        });
+      });
     }
   }
 

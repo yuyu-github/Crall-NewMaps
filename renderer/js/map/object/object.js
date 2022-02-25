@@ -43,6 +43,10 @@ export function init() {
     tiles.addObject(objectHash, pointHash);
   }
 
+  objects.update = (hash) => {
+    tiles.addObject(hash);
+  }
+
   objects.delete = hash => {
     for (let item of objects[hash]?.linkedPoints ?? []) {
       if (points[item].linkedObjects.length == 1) delete points[item];
