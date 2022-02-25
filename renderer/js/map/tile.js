@@ -60,18 +60,32 @@ export function init() {
           tilePos[shorter] = Math.floor(pos[shorter] / tileSize);
 
           addObjectTo(tilePos.x, tilePos.y, hash);
+          tileWithLine.push([tilePos.x, tilePos.y]);
           if (Math.floor(previousPos[shorter] / tileSize) != tilePos[shorter] /*shorterが違った場合、隣のタイルにも追加*/) {
             addObjectTo(tilePos.x, tilePos.y + (length[shorter] < 0 ? 1 : -1), hash);
+            tileWithLine.push([tilePos.x, tilePos.y + (length[shorter] < 0 ? 1 : -1)]);
             addObjectTo(tilePos.x, tilePos.y + (length[longer] < 0 ? 1 : -1), hash);
+            tileWithLine.push([tilePos.x, tilePos.y + (length[longer] < 0 ? 1 : -1)]);
           }
         }
       }
     }
+
+    if (type == 'area') {
+      //タイルを位置ごとに配列に入れる
+      let tilePosList = [];
+      for (let tile of tileWithLine) {
+        tilePosList[parseInt(tile[0]) + 10000] ??= [];
+        tilePosList[parseInt(tile[0]) + 10000][parseInt(tile[1]) + 10000] = true;
+      }
+
+      console.log(tilePosList);
+    }
   }
 
   tiles.get = (x, y) => {
-    let tileX = x + 1000000000000;
-    let tileY = y + 1000000000000;
+    let tileX = x + 10000;
+    let tileY = y + 10000;
 
     if (tiles[tileX] == undefined) tiles[tileX] = [];
     if (tiles[tileX][tileY] == undefined) tiles[tileX][tileY] = [];
