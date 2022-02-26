@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
 
 let mainWindow;
@@ -8,9 +8,10 @@ app.on('ready', () => {
     height: 900,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-    }
+    },
   });
 
+  Menu.setApplicationMenu(null);
   mainWindow.loadFile('renderer/index.html');
 
   mainWindow.on('closed', () => {
