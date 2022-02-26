@@ -3,5 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "electron-builder": "^22.14.13"
+  }
 }
