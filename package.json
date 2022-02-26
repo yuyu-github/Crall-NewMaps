@@ -1,7 +1,8 @@
 {
   "name": "wecres-new-maps",
   "version": "1.0.0",
-  "description": "",
+  "description": "It is an application that you can freely create a map.",
+  "author": "yuyu",
   "main": "main.js",
   "license": "MIT",
   "build": {
