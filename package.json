@@ -4,6 +4,21 @@
   "description": "",
   "main": "main.js",
   "license": "MIT",
+  "build": {
+    "appId": "wecres.newmaps",
+    "productName": "Wecres NewMaps",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "icon": "icon/win.ico",
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
   "devDependencies": {
     "electron-builder": "^22.14.13"
   }
