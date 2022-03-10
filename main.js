@@ -1,5 +1,6 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
+const { env } = require('process');
 
 let mainWindow;
 app.on('ready', () => {
@@ -11,7 +12,7 @@ app.on('ready', () => {
     },
   });
 
-  Menu.setApplicationMenu(null);
+  if (env.TYPE == 'release') Menu.setApplicationMenu(null); //デバッグ時のみメニューを表示
   mainWindow.loadFile('renderer/index.html');
 
   mainWindow.on('closed', () => {
