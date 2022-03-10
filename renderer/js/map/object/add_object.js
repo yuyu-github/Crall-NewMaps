@@ -1,7 +1,7 @@
-import { backgroundType } from "../background/background.js";
-import { centerX, centerY, elCenterX, elCenterY, elLeft, elTop, mapEl, zoomLevel } from "../map.js";
-import { draw } from "./draw.js";
-import { objects, points } from "./object.js";
+import { centerX, centerY, elCenterX, elCenterY, elLeft, elTop, mapEl, zoomLevel } from '../map.js';
+import { draw } from './draw.js';
+import { objects } from './object.js';
+import { points } from '../point/point.js'
 
 export let isediting = false;
 

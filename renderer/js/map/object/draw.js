@@ -1,6 +1,7 @@
 import { centerX, centerY, elCenterX, elCenterY, mapEl, addSVGElement, zoomLevel } from '../map.js'
 import { mode } from '../../mode.js'
-import { getHash, objects, points } from './object.js';
+import { getHash } from './object.js';
+import { points } from '../point/point.js';
 
 export function draw(object) {
   let hash = getHash(object);

@@ -1,7 +1,7 @@
 import { init as initAddObject } from './add_object.js';
-import { tiles } from "../tile.js";
+import { tiles } from '../tile.js';
+import { points } from '../point/point.js';
 
-export let points = {};
 export let objects = {};
 
 export function getHash(object) {
@@ -12,12 +12,6 @@ export function getHash(object) {
 
 export function init() {
   initAddObject();
-
-  points.add = value => {
-    let hash = api.getHash()
-    points[hash] = value;
-    return hash;
-  }
 
   objects.add = value => {
     let hash = api.getHash();

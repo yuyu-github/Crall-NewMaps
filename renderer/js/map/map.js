@@ -3,6 +3,7 @@ import { init as initBackground, moveTo, setZoom } from './background/background
 import { init as initTile, tiles, draw as drawTile, drawTileBorder, tileSize } from './tile.js';
 import { init as initObject } from './object/object.js';
 import { init as initZoom } from './zoom.js';
+import { init as initPoint } from './point/point.js';
 
 export const mapEl = document.getElementById('map');
 export const elCenterX = mapEl.clientWidth / 2;
@@ -21,6 +22,7 @@ export function init() {
   initTile();
   initObject();
   initZoom();
+  initPoint();
 }
 
 export let setCenterX = val => centerX = val;

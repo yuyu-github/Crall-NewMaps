@@ -1,5 +1,6 @@
 import { elCenterX, elCenterY, centerX, centerY, addSVGElement, zoomLevel, elHeight, elWidth } from './map.js';
-import { points, objects } from './object/object.js';
+import { objects } from './object/object.js';
+import { points } from './point/point.js';
 import { draw as drawObject } from './object/draw.js';
 
 export let tiles = [];
