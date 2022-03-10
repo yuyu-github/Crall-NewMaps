@@ -128,6 +128,7 @@ export function addObjectTo(x, y, hash) {
 }
 
 export function draw(tile, drew) {
+  console.log(tile);
   for (let hash of tile ?? []) {
     if (!drew?.includes(hash)) {
       drawObject(objects[hash]);
@@ -143,7 +144,7 @@ export function drawTileBorder() {
   const horizontalCount = elWidth / (tileSize * 2 ** zoomLevel) + 1;
   const verticalCount = elHeight / (tileSize * 2 ** zoomLevel) + 1;
 
-  for (let i = -Math.floor(horizontalCount / 2); i <= Math.floor(horizontalCount / 2); i++) {
+  for (let i = -Math.ceil(horizontalCount / 2); i <= Math.ceil(horizontalCount / 2); i++) {
     addSVGElement('line', {
       'class': 'tileborder',
       'x1': elCenterX + ((Math.floor(centerX / tileSize) + i) * tileSize - centerX) * 2 ** zoomLevel + 'px',
@@ -154,7 +155,7 @@ export function drawTileBorder() {
       'stroke-width': '1px',
     }, 30001)
   }
-  for (let i = -Math.floor(verticalCount / 2); i <= Math.floor(verticalCount) / 2; i++) {
+  for (let i = -Math.ceil(verticalCount / 2); i <= Math.ceil(verticalCount) / 2; i++) {
     addSVGElement('line', {
       'class': 'tileborder',
       'x1': '0px',

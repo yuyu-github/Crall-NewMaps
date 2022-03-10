@@ -60,6 +60,7 @@ export function draw() {
     }
   }
 
+  drawTileBorder();
   moveTo(centerX, centerY);
   setZoom(zoomLevel)
 }
