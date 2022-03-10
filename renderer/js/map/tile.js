@@ -128,7 +128,6 @@ export function addObjectTo(x, y, hash) {
 }
 
 export function draw(tile, drew) {
-  console.log(tile);
   for (let hash of tile ?? []) {
     if (!drew?.includes(hash)) {
       drawObject(objects[hash]);

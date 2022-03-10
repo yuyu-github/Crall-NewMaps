@@ -53,14 +53,13 @@ export function draw() {
     const verticalCount = elHeight / (tileSize * 2 ** zoomLevel) + 1;
 
     let drew = [];
-    for (let i = tileX - Math.floor(horizontalCount / 2); i <= tileX + Math.floor(horizontalCount / 2); i++) {
-      for (let j = tileY - Math.floor(verticalCount / 2); j <= tileY + Math.floor(verticalCount / 2); j++) {
+    for (let i = tileX - Math.ceil(horizontalCount / 2); i <= tileX + Math.ceil(horizontalCount / 2); i++) {
+      for (let j = tileY - Math.ceil(verticalCount / 2); j <= tileY + Math.ceil(verticalCount / 2); j++) {
         drew = drawTile(tiles.get(i, j), drew);
       }
     }
   }
 
-  drawTileBorder();
   moveTo(centerX, centerY);
   setZoom(zoomLevel)
 }
