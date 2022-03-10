@@ -2,6 +2,7 @@ import { centerX, centerY, elCenterX, elCenterY, mapEl, addSVGElement, zoomLevel
 import { mode } from '../../mode.js'
 import { getHash } from './object.js';
 import { points } from '../point/point.js';
+import { draw as drawPoint } from '../point/draw.js'
 
 export function draw(object) {
   let hash = getHash(object);
@@ -35,15 +36,7 @@ export function draw(object) {
         [...object.linkedPoints, ...(object.isPreview ? [null] : []) /*プレビューなら一要素追加*/].forEach((hash, i) => {
           let point = points[hash];
 
-          if (!(object.isPreview && i == object.linkedPoints.length)) returnValue[1].push(addSVGElement('circle', {
-            'class': className,
-            'cx': elCenterX + (point.x - centerX) * 2 ** zoomLevel + 'px',
-            'cy': elCenterY + (point.y - centerY) * 2 ** zoomLevel + 'px',
-            'r': '5px',
-            'stroke': 'black',
-            'stroke-width': '0.5px',
-            'fill': 'lightgray',
-          }, 20003));
+          if (!(object.isPreview && i == object.linkedPoints.length)) returnValue[1].push(drawPoint(hash));
 
           //プレビューしている線の場合、色を薄くする
           if (object.isPreview && i == object.linkedPoints.length) {
