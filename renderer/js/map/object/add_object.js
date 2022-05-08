@@ -101,6 +101,7 @@ export function init() {
           y: (e.clientY - elTop - elCenterY) * 2 ** -zoomLevel + centerY,
         }));
         object.isPreview = false;
+        draw(object)
       }
 
       function finish() {
@@ -169,6 +170,7 @@ export function init() {
           y: (e.clientY - elTop - elCenterY) * 2 ** -zoomLevel + centerY,
         }));
         object.isPreview = false;
+        draw(object)
       }
 
       function finish() {
