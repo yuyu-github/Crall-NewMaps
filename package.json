@@ -1,13 +1,13 @@
 {
-  "name": "wecres-new-maps",
+  "name": "crall-new-maps",
   "version": "1.0.0",
   "description": "It is an application that you can freely create a map.",
   "author": "yuyu",
   "main": "main.js",
   "license": "MIT",
   "build": {
-    "appId": "wecres.newmaps",
-    "productName": "Wecres NewMaps",
+    "appId": "crall.newmaps",
+    "productName": "Crall NewMaps",
     "directories": {
       "output": "dist"
     },
