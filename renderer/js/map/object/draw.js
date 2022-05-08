@@ -81,15 +81,7 @@ export function draw(object) {
         [...object.linkedPoints, ...(object.isPreview ? [null] : [])].forEach((hash, i) => {
           let point = points[hash];
 
-          if (!(object.isPreview && i == object.linkedPoints.length)) returnValue[1].push(addSVGElement('circle', {
-            'class': className,
-            'cx': elCenterX + (point.x - centerX) * 2 ** zoomLevel + 'px',
-            'cy': elCenterY + (point.y - centerY) * 2 ** zoomLevel + 'px',
-            'r': '5px',
-            'stroke': 'black',
-            'stroke-width': '0.5px',
-            'fill': 'lightgray',
-          }, 20003));
+          if (!(object.isPreview && i == object.linkedPoints.length)) returnValue[1].push(drawPoint(hash));
           
           //プレビューしている線の場合、色を薄くする
           if (object.isPreview && i == object.linkedPoints.length) {
