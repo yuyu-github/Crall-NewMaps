@@ -12,7 +12,7 @@ export function draw(object) {
     case 'point': {
       if (object.linkedPoints.length != 0 || object.isPreview) {
         let point = points[object.linkedPoints[0]];
-        return addSVGElement('circle', {
+        return [[addSVGElement('circle', {
           'class': className,
           'cx': elCenterX + ((object.isPreview ? object.previewX : point.x) - centerX) * 2 ** zoomLevel + 'px',
           'cy': elCenterY + ((object.isPreview ? object.previewY : point.y) - centerY) * 2 ** zoomLevel + 'px',
@@ -23,7 +23,7 @@ export function draw(object) {
           'fill': 'red',
           'fill-opacity': object.isPreview ? '0.15' : '0.3',
           'style': object.isPreview ? 'pointer-events: none;' : '',
-        }, 20002);
+        }, 20002)], drawPoint(object.linkedPoints[0], true, true)];
       } else return null;
     }
     case 'line': {
