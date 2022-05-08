@@ -48,7 +48,7 @@ export function draw(object) {
               'x2': elCenterX + (object.previewX - centerX) * 2 ** zoomLevel + 'px',
               'y2': elCenterY + (object.previewY - centerY) * 2 ** zoomLevel + 'px',
               'stroke': 'blue',
-              'stroke-width': '4px',
+              'stroke-width': '5px',
               'stroke-opacity': '0.5',
               'style': 'pointer-events: none;',
             }, 20000);
@@ -63,7 +63,7 @@ export function draw(object) {
             'class': className,
             'points': SVGPoints,
             'stroke': 'blue',
-            'stroke-width': '4px',
+            'stroke-width': '5px',
             'fill': 'none',
           }, 20000);
         }
@@ -93,7 +93,7 @@ export function draw(object) {
               'x2': elCenterX + (object.previewX - centerX) * 2 ** zoomLevel + 'px',
               'y2': elCenterY + (object.previewY - centerY) * 2 ** zoomLevel + 'px',
               'stroke': 'limegreen',
-              'stroke-width': '4px',
+              'stroke-width': '5px',
               'stroke-opacity': '0.5',
               'style': 'pointer-events: none;',
             }, 20000);
@@ -108,7 +108,7 @@ export function draw(object) {
             'class': className,
             'points': SVGPoints,
             'stroke': 'limegreen',
-            'stroke-width': '4px',
+            'stroke-width': '5px',
             'fill': 'limegreen',
             'fill-opacity': '0.3',
           }, 20000);
@@ -117,7 +117,7 @@ export function draw(object) {
             'class': className,
             'points': SVGPoints,
             'stroke': 'limegreen',
-            'stroke-width': '4px',
+            'stroke-width': '5px',
             'fill': 'none',
           }, 20000);
         }

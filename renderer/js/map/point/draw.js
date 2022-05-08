@@ -11,7 +11,7 @@ export function draw(hash, big = false, transparent = false) {
     'class': className,
     'cx': elCenterX + (point.x - centerX) * 2 ** zoomLevel + 'px',
     'cy': elCenterY + (point.y - centerY) * 2 ** zoomLevel + 'px',
-    'r': big ? '8px' : '5px',
+    'r': big ? '8px' : '5.5px',
     'stroke': 'black',
     'stroke-width': '0.5px',
     'fill': 'lightgray',
