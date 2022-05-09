@@ -2,8 +2,10 @@ import { centerX, centerY, elCenterX, elCenterY, mapEl, addSVGElement, zoomLevel
 import { mode } from '../../mode.js'
 import { getHash } from './object.js';
 import { points } from '../point/point.js';
-import { draw as drawPoint } from '../point/draw.js'
+import { bigPointR, draw as drawPoint } from '../point/draw.js'
 import { draw as drawBorder } from './border/draw.js';
+
+export const lineWidth = 5;
 
 export function draw(object) {
   let hash = getHash(object);
@@ -20,7 +22,7 @@ export function draw(object) {
           'class': className,
           'cx': elCenterX + ((object.isPreview ? object.previewX : point.x) - centerX) * 2 ** zoomLevel + 'px',
           'cy': elCenterY + ((object.isPreview ? object.previewY : point.y) - centerY) * 2 ** zoomLevel + 'px',
-          'r': '8px',
+          'r': bigPointR + 'px',
           'stroke': 'red',
           'stroke-width': '1.5px',
           'stroke-opacity': object.isPreview ? '0.5' : '1',
@@ -54,7 +56,7 @@ export function draw(object) {
               'x2': elCenterX + (object.previewX - centerX) * 2 ** zoomLevel + 'px',
               'y2': elCenterY + (object.previewY - centerY) * 2 ** zoomLevel + 'px',
               'stroke': 'blue',
-              'stroke-width': '5px',
+              'stroke-width': lineWidth + 'px',
               'stroke-opacity': '0.5',
               'style': 'pointer-events: none;',
             }, 20000);
@@ -69,7 +71,7 @@ export function draw(object) {
             'class': className,
             'points': SVGPoints,
             'stroke': 'blue',
-            'stroke-width': '5px',
+            'stroke-width': lineWidth + 'px',
             'fill': 'none',
           }, 20000);
         }
@@ -104,7 +106,7 @@ export function draw(object) {
               'x2': elCenterX + (object.previewX - centerX) * 2 ** zoomLevel + 'px',
               'y2': elCenterY + (object.previewY - centerY) * 2 ** zoomLevel + 'px',
               'stroke': 'limegreen',
-              'stroke-width': '5px',
+              'stroke-width': lineWidth + 'px',
               'stroke-opacity': '0.5',
               'style': 'pointer-events: none;',
             }, 20000);
@@ -119,7 +121,7 @@ export function draw(object) {
             'class': className,
             'points': SVGPoints,
             'stroke': 'limegreen',
-            'stroke-width': '5px',
+            'stroke-width': lineWidth + 'px',
             'fill': 'limegreen',
             'fill-opacity': '0.3',
           }, 20000);
@@ -128,7 +130,7 @@ export function draw(object) {
             'class': className,
             'points': SVGPoints,
             'stroke': 'limegreen',
-            'stroke-width': '5px',
+            'stroke-width': lineWidth + 'px',
             'fill': 'none',
           }, 20000);
         }
