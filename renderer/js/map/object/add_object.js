@@ -94,6 +94,17 @@ export function init() {
         document.body.addEventListener('click', bodyClickFn);
       }
 
+      function update() {
+        let drawresult = draw(object);
+        if (drawresult[1].length > 1) {
+          lastPoint?.removeEventListener('click', finish)
+          if (lastPoint != null) lastPoint.style.cursor = 'default';
+          lastPoint = drawresult[1].slice(-1)[0];
+          lastPoint?.addEventListener('click', finish);
+          if (lastPoint != null) lastPoint.style.cursor = 'pointer';
+        }
+      }
+
       mapEl.addEventListener('click', clickFn);
       function clickFn(e) {
         mapEl.removeEventListener('mouseleave', leaveFn);
@@ -103,6 +114,7 @@ export function init() {
         }));
         object.isPreview = false;
         draw(object)
+        update();
       }
 
       function finish() {
@@ -115,14 +127,7 @@ export function init() {
         object.previewY = (e.clientY - elTop - elCenterY) * 2 ** -zoomLevel + centerY;
         object.isPreview = true;
 
-        let drawresult = draw(object);
-        if (drawresult[1].length > 1) {
-          lastPoint?.removeEventListener('click', finish)
-          if (lastPoint != null) lastPoint.style.cursor = 'default';
-          lastPoint = drawresult[1].slice(-1)[0];
-          lastPoint?.addEventListener('click', finish);
-          if (lastPoint != null) lastPoint.style.cursor = 'pointer';
-        }
+        update();
       }
       mapEl.addEventListener('mousemove', moveFn);
     }
@@ -163,6 +168,15 @@ export function init() {
         document.body.addEventListener('click', bodyClickFn);
       }
 
+      function update() {
+        let drawresult = draw(object);
+        if (drawresult[1].length > 2) {
+          firstPoint = drawresult[1][0];
+          firstPoint?.addEventListener('click', finish);
+          if (firstPoint != null) firstPoint.style.cursor = 'pointer'
+        }
+      }
+
       mapEl.addEventListener('click', clickFn);
       function clickFn(e) {
         mapEl.removeEventListener('mouseleave', leaveFn);
@@ -192,12 +206,7 @@ export function init() {
         object.previewY = (e.clientY - elTop - elCenterY) * 2 ** -zoomLevel + centerY;
         object.isPreview = true;
 
-        let drawresult = draw(object);
-        if (drawresult[1].length > 2) {
-          firstPoint = drawresult[1][0];
-          firstPoint?.addEventListener('click', finish);
-          if (firstPoint != null) firstPoint.style.cursor = 'pointer'
-        }
+        update();
       }
       mapEl.addEventListener('mousemove', moveFn);
     }
