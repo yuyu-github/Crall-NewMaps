@@ -12,7 +12,7 @@ app.on('ready', () => {
     },
   });
 
-  if (env.TYPE == 'release') Menu.setApplicationMenu(null); //デバッグ時のみメニューを表示
+  if (env.TYPE != 'debug') Menu.setApplicationMenu(null); //デバッグ時のみメニューを表示
   mainWindow.loadFile('renderer/index.html');
 
   mainWindow.on('closed', () => {
