@@ -19,6 +19,7 @@ export function draw(hash) {
     'stroke': 'black',
     'stroke-width': borderWidth + 'px',
     'opacity': '0',
+    'cursor': 'pointer',
   }, 20003)
 
   addDragEvent(hash);
