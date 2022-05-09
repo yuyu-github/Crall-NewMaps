@@ -1,7 +1,8 @@
 import { centerX, centerY, elCenterX, elCenterY, elLeft, elTop, mapEl, zoomLevel } from '../map.js';
 import { draw } from './draw.js';
-import { objects } from './object.js';
+import { getHash, objects } from './object.js';
 import { points } from '../point/point.js'
+import { borders } from './border/border.js';
 
 export let isediting = false;
 
@@ -174,6 +175,12 @@ export function init() {
       }
 
       function finish() {
+        borders.add({
+          point1: object.linkedPoints.slice(-1)[0],
+          point2: object.linkedPoints[0],
+          object: getHash(object),
+        })
+
         end();
         object.closed = true;
         objects.update(hash);

@@ -3,10 +3,14 @@ import { mode } from '../../mode.js'
 import { getHash } from './object.js';
 import { points } from '../point/point.js';
 import { draw as drawPoint } from '../point/draw.js'
+import { draw as drawBorder } from './border/draw.js';
 
 export function draw(object) {
   let hash = getHash(object);
-  if (hash != '') Array.from(document.getElementsByClassName('object-' + hash)).forEach(item => item.remove());
+  if (hash != '') {
+    Array.from(document.getElementsByClassName('object-' + hash)).forEach(item => item.remove());
+    Array.from(document.getElementsByClassName('object-' + hash + '-border')).forEach(item => item.remove());
+  }
   let className = 'object ' + (hash == '' ? '' : 'object-' + hash);
   switch (object.type) {
     case 'point': {
@@ -36,7 +40,9 @@ export function draw(object) {
         [...object.linkedPoints, ...(object.isPreview ? [null] : []) /*プレビューなら一要素追加*/].forEach((hash, i) => {
           let point = points[hash];
 
-          if (!(object.isPreview && i == object.linkedPoints.length)) returnValue[1].push(drawPoint(hash));
+          if (!(object.isPreview && i == object.linkedPoints.length)) {
+            returnValue[1].push(drawPoint(hash));
+          }
 
           //プレビューしている線の場合、色を薄くする
           if (object.isPreview && i == object.linkedPoints.length) {
@@ -68,6 +74,11 @@ export function draw(object) {
           }, 20000);
         }
       }
+
+      returnValue[2] = [];
+      object.borders?.forEach(item => {
+        returnValue[2].push(drawBorder(item));
+      });
 
       return returnValue;
     }
@@ -122,6 +133,11 @@ export function draw(object) {
           }, 20000);
         }
       }
+
+      returnValue[2] = [];
+      object.borders?.forEach(item => {
+        returnValue[2].push(drawBorder(item));
+      });
 
       return returnValue;
     }

@@ -1,10 +1,10 @@
 import { centerX, centerY, elLeft, elTop, mapEl, setCenterX, setCenterY, draw, zoomLevel } from "./map.js";
-import { isDragging } from "./point/drag.js";
+import { isDraggingPoint } from "./point/drag.js";
 
 export function init() {
   mapEl.addEventListener('mousedown', e => {
     if (e.target.classList.contains('point')) return;
-    if (isDragging) return;
+    if (isDraggingPoint) return;
 
     const dragStartPosX = e.clientX - elLeft;
     const dragStartPosY = e.clientY - elTop;
