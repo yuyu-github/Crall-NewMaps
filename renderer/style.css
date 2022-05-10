@@ -80,3 +80,39 @@ body {
   width: 100%;
   height: 100%;
 }
+
+#right-click-menu {
+  position: absolute;
+  top: 100px;
+  left: 50px;
+  padding: 3px;
+  background-color: white;
+  box-shadow: 0px 0px 3px 4px #eeeeee;
+}
+
+#right-click-menu td :not(hr) {
+  display: block;
+  background-color: inherit;
+  margin: 0;
+  width: auto;
+  padding: 3px 6px;
+  border: none;
+  color: black;
+  font-size: 17px;
+  font-family: 'Meiryo';
+  text-decoration: none;
+  cursor: default;
+  user-select: none;
+}
+
+#right-click-menu td :not(hr):hover {
+  background-color: #f3f3f3;
+}
+
+#right-click-menu a:link, #right-click-menu a:visited, #right-click-menu a:hover, #right-click-menu a:active {
+  color: black;
+}
+
+#right-click-menu hr {
+  margin: 3px 0;
+}
