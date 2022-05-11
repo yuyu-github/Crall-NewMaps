@@ -83,19 +83,22 @@ body {
 
 #right-click-menu {
   position: absolute;
-  padding: 4px 0;
+  padding: 3px 0;
   background-color: white;
   box-shadow: 0px 0px 3px 4px #eeeeee;
   display: none;
+}
+
+#right-click-menu td {
   min-width: 150px;
 }
 
 #right-click-menu td :not(hr) {
   display: block;
   background-color: inherit;
-  margin: 0;
   width: auto;
-  margin: 0 6px;
+  margin: 0 2px;
+  padding: 2px 4px;
   border: none;
   color: black;
   font-size: 15px;
