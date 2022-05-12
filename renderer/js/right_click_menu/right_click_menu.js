@@ -31,6 +31,11 @@ export function display(content, e) {
       let btn = td.appendChild(document.createElement('p'));
       btn.innerHTML = item;
       btn.addEventListener('click', content[item]);
+      btn.addEventListener('click', () => {
+        let el = document.getElementById('right-click-menu')
+        el.innerHTML = '';
+        el.style.display = 'none';
+      });
       btn.classList.add('right-click-menu');
     }
   }
