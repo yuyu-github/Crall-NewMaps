@@ -6,4 +6,9 @@ export function init() {
     points[hash] = value;
     return hash;
   }
+
+  points.delete = hash => {
+    Array.from(document.getElementsByClassName('point-' + hash)).forEach(item => item.remove());
+    delete points[hash];
+  }
 }
