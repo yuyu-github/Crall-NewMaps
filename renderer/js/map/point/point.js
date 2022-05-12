@@ -1,3 +1,4 @@
+import { draw as drawObject } from "../object/draw.js";
 import { objects } from "../object/object.js";
 
 export let points = {};
@@ -15,6 +16,7 @@ export function init() {
       obj.linkedPoints.splice(obj.linkedPoints.indexOf(hash), 1);
 
       objects.update(item);
+      drawObject(obj);
     }
 
     Array.from(document.getElementsByClassName('point-' + hash)).forEach(item => item.remove());
