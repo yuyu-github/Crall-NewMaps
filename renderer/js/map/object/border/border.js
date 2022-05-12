@@ -13,5 +13,7 @@ borders.add = value => {
 }
 
 borders.delete = hash => {
+  objects[borders[hash].object].borders.splice(objects[borders[hash].object].borders.indexOf(hash))
+
   delete borders[hash];
 }
