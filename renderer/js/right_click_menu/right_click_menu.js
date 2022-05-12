@@ -14,7 +14,7 @@ export function init() {
   })
 }
 
-export function display(content, e) {
+export function display(content, clickedTarget, e) {
   let el = document.getElementById('right-click-menu');
   el.innerHTML = '';
   el.style.top = e.clientY + 'px';
@@ -30,7 +30,7 @@ export function display(content, e) {
     } else {
       let btn = td.appendChild(document.createElement('p'));
       btn.innerHTML = item;
-      btn.addEventListener('click', content[item]);
+      btn.addEventListener('click', content[item].bind(null, clickedTarget));
       btn.addEventListener('click', () => {
         let el = document.getElementById('right-click-menu')
         el.innerHTML = '';
