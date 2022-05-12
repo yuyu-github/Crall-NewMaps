@@ -66,16 +66,16 @@ export function init() {
   }
 
   objects.delete = hash => {
-    (object[hash]?.borders ?? []).forEach(item => delete borders[item]);
+    (objects[hash]?.borders ?? []).forEach(item => delete borders[item]);
     Array.from(document.getElementsByClassName('object-' + hash + '-border')).forEach(item => item.remove());
 
     for (let item of objects[hash]?.linkedPoints ?? []) {
-      if (points[item].linkedObjects.length == 1) delete points[item];
+      if (points[item].linkedObjects.length == 1) points.delete(item);
       else points[item].linkedObjects.splice(points[item].linkedObjects.indexOf(hash), 1);
     }
     for (let item of objects[hash]?.linkedTiles ?? []) {
-      if (tiles[item[0]][item[1]].length == 1) delete tiles[item[0]][item[1]];
-      else tiles[item[0]][item[1]].splice(tiles[item[0]][item[1]].indexOf(hash), 1)
+      if (tiles.get(item[0], item[1]).length == 1) tiles.delete(item[0], item[1]);
+      else tiles.get(item[0], item[1]).splice(tiles.get(item[0], item[1]).indexOf(hash), 1)
     }
     delete objects[hash];
     Array.from(document.getElementsByClassName('object-' + hash)).forEach(item => item.remove());
