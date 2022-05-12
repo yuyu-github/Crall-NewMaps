@@ -38,31 +38,40 @@ export function init() {
     list.push(objectHash);
     points[pointHash]['linkedObjects'] = list;
 
-    tiles.addObject(objectHash, pointHash);
-
-    if (objects[objectHash].linkedPoints.length > 1) {
-      Array.from(document.getElementsByClassName('object-' + objectHash + '-border')).forEach(item => item.remove());
-      objects[objectHash].linkedPoints.forEach((item, i) => {
-        if (objects[objectHash].linkedPoints.length - 1 > i) {
-          borders.add({
-            point1: item,
-            point2: objects[objectHash].linkedPoints[i + 1],
-            object: objectHash,
-          });
-        }
-      });
-      if (objects[objectHash].type == 'area' && objects[objectHash].closed) {
-        borders.add({
-          point1: objects[objectHash].linkedPoints.slice(-1)[0],
-          point2: objects[objectHash].linkedPoints[0],
-          object: objectHash,
-        })
-      }
-    }
+    objects.update(objectHash);
   }
 
   objects.update = (hash) => {
     tiles.addObject(hash);
+
+    Array.from(document.getElementsByClassName('object-' + hash + '-border')).forEach(item => {
+      for (let name of item.classList) {
+        let matches = name.match(/border-([^\-]+)/);
+        if (matches != null) {
+          borders.delete(matches[1]);
+          break;
+        }
+      }
+
+      item.remove()
+    });
+
+    objects[hash].linkedPoints.forEach((item, i) => {
+      if (objects[hash].linkedPoints.length - 1 > i) {
+        borders.add({
+          point1: item,
+          point2: objects[hash].linkedPoints[i + 1],
+          object: hash,
+        });
+      }
+    });
+    if (objects[hash].type == 'area' && objects[hash].closed) {
+      borders.add({
+        point1: objects[hash].linkedPoints.slice(-1)[0],
+        point2: objects[hash].linkedPoints[0],
+        object: hash,
+      })
+    }
   }
 
   objects.delete = hash => {
