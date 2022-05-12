@@ -1,6 +1,6 @@
 {
   "name": "crall-new-maps",
-  "version": "1.2",
+  "version": "1.2.0",
   "description": "It is an application that you can freely create a map.",
   "author": "yuyu",
   "main": "main.js",
