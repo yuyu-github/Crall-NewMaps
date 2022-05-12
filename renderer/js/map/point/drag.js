@@ -8,6 +8,8 @@ export let isDraggingPoint = false;
 export function addDragEvent(hash) {
   let el = document.getElementsByClassName("point-" + hash)[0];
   el?.addEventListener('mousedown', e => {
+    if (e.button != 0) return;
+    
     dragEvent(hash, e)
   })
 }

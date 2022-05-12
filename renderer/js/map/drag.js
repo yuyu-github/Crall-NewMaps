@@ -3,6 +3,7 @@ import { isDraggingPoint } from "./point/drag.js";
 
 export function init() {
   mapEl.addEventListener('mousedown', e => {
+    if (e.button != 0) return;
     if (e.target.classList.contains('point')) return;
     if (isDraggingPoint) return;
 

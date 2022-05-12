@@ -10,6 +10,8 @@ export function addDragEvent(hash) {
   let obj = borders[hash];
 
   el.addEventListener('mousedown', e => {
+    if (e.button != 0) return;
+
     if (!(isDraggingPoint)) {
       let pointHash = points.add({
         x: (e.clientX - elLeft - elCenterX) * 2 ** -zoomLevel + centerX,
