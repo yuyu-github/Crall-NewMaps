@@ -11,3 +11,7 @@ borders.add = value => {
 
   return hash;
 }
+
+borders.delete = hash => {
+  delete borders[hash];
+}
