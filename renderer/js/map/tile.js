@@ -116,6 +116,10 @@ export function init() {
     if (tiles[tileX][tileY] == undefined) tiles[tileX][tileY] = [];
     return tiles[tileX][tileY];
   }
+
+  tiles.delete = (x, y) => {
+    if (tiles[x + 10000] != null) delete tiles[x + 10000][y + 10000]
+  }
 }
 
 export function addObjectTo(x, y, hash) {
