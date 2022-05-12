@@ -2,6 +2,7 @@ import { borders } from "./border.js";
 import { addSVGElement, elCenterX, elCenterY, centerX, centerY, zoomLevel } from "../../map.js";
 import { points } from "../../point/point.js";
 import { addDragEvent } from "./drag.js";
+import { addEvent } from "../../../right_click_menu/add_event.js";
 
 export const borderWidth = 6
 
@@ -23,6 +24,7 @@ export function draw(hash) {
   }, 20003)
 
   addDragEvent(hash);
+  addEvent('.border');
 
   return el;
 }
