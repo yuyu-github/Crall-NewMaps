@@ -1,6 +1,7 @@
 import { centerX, centerY, elCenterX, elCenterY, addSVGElement, zoomLevel } from '../map.js'
 import { points } from './point.js';
 import { addDragEvent } from './drag.js';
+import { addEvent } from '../../right_click_menu/add_event.js';
 
 export const pointR = 5.5;
 export const bigPointR = 8;
@@ -25,6 +26,7 @@ export function draw(hash, big = false, transparent = false) {
   }, 20003)
 
   addDragEvent(hash);
+  addEvent('.point');
 
   return el;
 }
