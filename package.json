@@ -23,5 +23,8 @@
   "devDependencies": {
     "electron": "^17.1.0",
     "electron-builder": "^22.14.13"
+  },
+  "dependencies": {
+    "jszip": "^3.9.1"
   }
 }
