@@ -43,7 +43,7 @@ export function setBackground(name) {
 
 export function moveTo(x, y) {
   switch (backgroundType) {
-    case 'realitymap':
+    case 'leaflet':
       realityMapMoveTo(x, y);
       break;
   }
@@ -51,7 +51,7 @@ export function moveTo(x, y) {
 
 export function setZoom(zoomLevel) {
   switch (backgroundType) {
-    case 'realitymap':
+    case 'leaflet':
       realityMapSetZoom(zoomLevel);
       break;
   }

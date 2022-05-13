@@ -31,7 +31,7 @@ export function loadMap(url, options, zoom = options['maxZoom'] ?? 18) {
       clearInterval(id);
 
       //地図読み込み
-      setBackgroundType('realitymap')
+      setBackgroundType('leaflet')
       setBackgroundObj(L.map('background', {
         center: [0, 0],
         zoom: zoom,
