@@ -46,4 +46,6 @@ export function save() {
     'objects': lightweightObjects,
     'points': lightweightPoints,
   }
+
+  api.save(data, format);
 }
