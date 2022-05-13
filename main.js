@@ -35,7 +35,12 @@ app.on('activate', () => {
 
 const { dialog } = require('electron');
 const fs = require('fs');
+const crypto = require('crypto');
 const JSZip = require('jszip');
+
+ipcMain.on('getHash', e => {
+  e.returnValue = crypto.randomBytes(20).toString('hex');
+})
 
 ipcMain.handle('save', (e, data, format) => {
   let zip = new JSZip();

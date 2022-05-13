@@ -1,7 +1,6 @@
 const { contextBridge, ipcRenderer } = require('electron');
-const crypto = require('crypto');
 
 contextBridge.exposeInMainWorld('api', {
-  getHash: () => crypto.randomBytes(20).toString('hex'),
+  getHash: () => ipcRenderer.sendSync('getHash'),
   save: async (data, format) => await ipcRenderer.invoke('save', data, format),
 })
