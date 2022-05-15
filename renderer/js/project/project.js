@@ -10,4 +10,13 @@ export function init() {
 
 export function setPath(val) {
   path = val;
+
+  let title;
+  let matches = path.match(/\\([^\\]+)$/);
+  if (matches != null) {
+    title = matches[1];
+  }
+  else title = '新規プロジェクト';
+  title += ' - Crall NewMaps';
+  api.setTitle(title);
 }

@@ -58,5 +58,9 @@ module.exports = mainWindow => {
     } catch (e) {
       console.error(e);
     }
+  });
+
+  ipcMain.handle('setTitle', (e, val) => {
+    mainWindow.setTitle(val);
   })
 }
