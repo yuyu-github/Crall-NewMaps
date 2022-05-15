@@ -3,7 +3,11 @@ import { objects } from "../map/object/object.js";
 import { points } from "../map/point/point.js";
 import { elementsToErase } from "./elements_to_erase.js";
 
-const format = 1;
+export const format = 1;
+
+export function init() {
+  api.onSave(save);
+}
 
 export function save() {
   //軽量化

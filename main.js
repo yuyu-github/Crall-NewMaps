@@ -11,8 +11,23 @@ app.on('ready', () => {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
+  exports.mainWindow = mainWindow;
 
-  if (env.TYPE != 'debug') Menu.setApplicationMenu(null); //デバッグ時のみメニューを表示
+  if (env.TYPE == 'debug') {
+    //デバッグ時のみデバッグメニューを表示
+    Menu.setApplicationMenu(Menu.buildFromTemplate([
+      ...require('./menu.js'),
+      {
+        label: 'デバッグ',
+        submenu: [
+          { label: 'デベロッパーツール', role: 'toggleDevTools' },
+          { label: '再読み込み', role: 'reload' }
+        ]
+      }
+    ]));
+  }
+  else Menu.setApplicationMenu(Menu.buildFromTemplate(require('./menu.js')))
+  
   mainWindow.loadFile('renderer/index.html');
 
   mainWindow.on('closed', () => {

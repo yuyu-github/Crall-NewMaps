@@ -1,5 +1,6 @@
 module.exports = function() {
   const { ipcMain, dialog } = require('electron');
+  const { mainWindow } = require('./main.js');
   const fs = require('fs');
   const crypto = require('crypto');
   const JSZip = require('jszip');
