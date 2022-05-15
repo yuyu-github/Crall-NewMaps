@@ -3,6 +3,7 @@ import { init as initBorder } from './border/border.js';
 import { tiles } from '../tile.js';
 import { points } from '../point/point.js';
 import { borders } from './border/border.js';
+import { setSaved } from '../../project/project.js';
 
 export let objects = {};
 
@@ -23,14 +24,19 @@ export function initObjects() {
   objects.add = value => {
     let hash = api.getHash();
     objects[hash] = value;
+
     //pointsのlinkedObjctsに追加
     for (let item of value?.linkedPoints ?? []) {
       let list = points[item]?.['linkedObjects'] ?? [];
       list.push(hash)
       points[item]['linkedObjects'] = list;
     }
+
     //タイルに追加
     tiles.addObject(hash);
+  
+    setSaved(false);
+
     return hash;
   }
 
@@ -78,6 +84,8 @@ export function initObjects() {
         object: hash,
       })
     }
+
+    setSaved(false);
   }
 
   objects.delete = hash => {

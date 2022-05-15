@@ -1,3 +1,4 @@
+import { setSaved } from "../../project/project.js";
 import { loadMap, moveTo as realityMapMoveTo, setZoom as realityMapSetZoom } from "./leaflet.js";
 
 export let background = document.querySelector('#background-setting > select').value;
@@ -39,6 +40,8 @@ export function setBackground(name) {
       })
       break;
   }
+
+  setSaved(false);
 }
 
 export function moveTo(x, y) {

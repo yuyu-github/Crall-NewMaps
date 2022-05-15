@@ -1,12 +1,14 @@
 import { init as initFile } from './file/file.js';
 
 export let path;
+export let saved = false;
 
 export function init() {
   initFile();
 
   setPath('');
   api.onSetPath((e, val) => setPath(val));
+  api.onSetSaved((e, val) => setSaved(val));
 }
 
 export function setPath(val) {
@@ -20,4 +22,8 @@ export function setPath(val) {
   else title = '新規プロジェクト';
   title += ' - Crall NewMaps';
   api.setTitle(title);
+}
+
+export function setSaved(val) {
+  saved = val;
 }

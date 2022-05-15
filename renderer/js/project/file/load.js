@@ -5,7 +5,7 @@ import { objects, setObjects } from "../../map/object/object.js";
 import { points, setPoints } from "../../map/point/point.js";
 import { setBorders } from "../../map/object/border/border.js";
 import { draw } from "../../map/map.js";
-import { setPath } from "../project.js";
+import { setPath, setSaved } from "../project.js";
 
 export function init() {
   api.onLoad(load);
@@ -17,8 +17,6 @@ export function load() {
 }
 
 export function loadData(format, data, path) {
-  setPath(path);
-
   setBackground(data.background);
 
   setTiles([]);
@@ -50,4 +48,7 @@ export function loadData(format, data, path) {
   for (let item in orgObjects) objects.update(item);
 
   draw();
+
+  setPath(path);
+  setSaved(true);
 }

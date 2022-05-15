@@ -10,4 +10,5 @@ contextBridge.exposeInMainWorld('api', {
   onLoad: callback => ipcRenderer.on('load', callback),
   onLoadResult: callback => ipcRenderer.on('loadResult', callback),
   onSetPath: callback => ipcRenderer.on('setPath', callback),
+  onSetSaved: callback => ipcRenderer.on('setSaved', callback),
 })
