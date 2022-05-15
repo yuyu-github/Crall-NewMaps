@@ -65,4 +65,8 @@ module.exports = mainWindow => {
   ipcMain.handle('setTitle', (e, val) => {
     mainWindow.setTitle(val);
   })
+
+  ipcMain.handle('getTitle', () => {
+    return mainWindow.getTitle();
+  });
 }
