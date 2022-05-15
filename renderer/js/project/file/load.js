@@ -4,7 +4,7 @@ import { setTiles, tiles } from "../../map/tile.js";
 import { objects, setObjects } from "../../map/object/object.js";
 import { points, setPoints } from "../../map/point/point.js";
 import { setBorders } from "../../map/object/border/border.js";
-import { draw } from "../../map/map.js";
+import { draw, mapEl } from "../../map/map.js";
 import { setPath, setSaved } from "../project.js";
 
 export function init() {
@@ -17,10 +17,12 @@ export function load() {
 }
 
 export function loadData(format, data, path) {
-  setBackground(data.background);
+  mapEl.innerHTML = '';
 
   setTiles([]);
   setBorders([]);
+
+  setBackground(data.background);
 
   //軽量化した部分を復元
   let orgPoints = data.points;
