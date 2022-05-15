@@ -6,10 +6,17 @@ import { points, setPoints } from "../../map/point/point.js";
 import { setBorders } from "../../map/object/border/border.js";
 import { draw, mapEl } from "../../map/map.js";
 import { setPath, setSaved } from "../project.js";
+import { format } from "./save.js";
 
 export function init() {
   api.onLoad(load);
   api.onLoadResult((e, data) => loadData(data.format, data.data, data.path));
+
+  api.onCreateNew(() => loadData(format, {
+    background: '',
+    objects: {},
+    points: {},
+  }, ''))
 }
 
 export function load() {
