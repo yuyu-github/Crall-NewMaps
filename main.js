@@ -11,12 +11,13 @@ app.on('ready', () => {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
-  exports.mainWindow = mainWindow;
+
+  require('./ipc.js')(mainWindow);
 
   if (env.TYPE == 'debug') {
     //デバッグ時のみデバッグメニューを表示
     Menu.setApplicationMenu(Menu.buildFromTemplate([
-      ...require('./menu.js'),
+      ...require('./menu.js')(mainWindow),
       {
         label: 'デバッグ',
         submenu: [
@@ -26,7 +27,7 @@ app.on('ready', () => {
       }
     ]));
   }
-  else Menu.setApplicationMenu(Menu.buildFromTemplate(require('./menu.js')))
+  else Menu.setApplicationMenu(Menu.buildFromTemplate(require('./menu.js')(mainWindow)))
   
   mainWindow.loadFile('renderer/index.html');
 
@@ -46,5 +47,3 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-require('./ipc.js')();

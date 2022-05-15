@@ -7,6 +7,10 @@ export let tiles = [];
 export const tileSize = 1000;
 
 export function init() {
+  initTiles();
+}
+
+export function initTiles() {
   tiles.addObject = hash => {
     let object = objects[hash];
     let type = object.type;
@@ -120,6 +124,11 @@ export function init() {
   tiles.delete = (x, y) => {
     if (tiles[x + 10000] != null) delete tiles[x + 10000][y + 10000]
   }
+}
+
+export function setTiles(data) {
+  tiles = data;
+  initTiles();
 }
 
 export function addObjectTo(x, y, hash) {

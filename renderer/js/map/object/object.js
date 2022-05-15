@@ -1,4 +1,5 @@
 import { init as initAddObject } from './add_object.js';
+import { init as initBorder } from './border/border.js';
 import { tiles } from '../tile.js';
 import { points } from '../point/point.js';
 import { borders } from './border/border.js';
@@ -13,7 +14,12 @@ export function getHash(object) {
 
 export function init() {
   initAddObject();
+  initBorder();
 
+  initObjects();
+}
+
+export function initObjects() {
   objects.add = value => {
     let hash = api.getHash();
     objects[hash] = value;
@@ -89,4 +95,9 @@ export function init() {
     delete objects[hash];
     Array.from(document.getElementsByClassName('object-' + hash)).forEach(item => item.remove());
   }
+}
+
+export function setObjects(data) {
+  objects = data;
+  initObjects();
 }

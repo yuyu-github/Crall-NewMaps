@@ -1,6 +1,5 @@
-module.exports = function() {
+module.exports = mainWindow => {
   const { ipcMain, dialog } = require('electron');
-  const { mainWindow } = require('./main.js');
   const fs = require('fs');
   const crypto = require('crypto');
   const JSZip = require('jszip');
@@ -29,12 +28,34 @@ module.exports = function() {
       filters: [
         { name: 'Crall NewMapsプロジェクト', extensions: ['cnm'] },
       ],
-      properties: [
-        'createDirectory',
-      ]
+      properties: ['createDirectory']
     });
     if (path != undefined) {
       stream.pipe(fs.createWriteStream(path)); //指定したパスに保存
+    }
+  })
+
+  ipcMain.handle('load', async () => {
+    const path = dialog.showOpenDialogSync(mainWindow, {
+      title: '開く',
+      buttonLabel: '開く',
+      filters: [
+        { name: 'Crall NewMapsプロジェクト', extensions: ['cnm'] }
+      ],
+      properties: ['openFile'],
+    });
+    if (path == undefined) return;
+
+    try {
+      let zip = await JSZip.loadAsync(fs.readFileSync(path[0]));
+
+      const format = await zip.file('format.txt').async('string');
+      mainWindow.webContents.send('loadResult', {
+        format: format,
+        data: JSON.parse(await zip.file('data.json').async('string')),
+      });
+    } catch (e) {
+      console.error(e);
     }
   })
 }

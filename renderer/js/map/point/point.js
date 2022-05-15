@@ -4,6 +4,10 @@ import { objects } from "../object/object.js";
 export let points = {};
 
 export function init() {
+  initPoints();
+}
+
+export function initPoints() {
   points.add = value => {
     let hash = api.getHash()
     points[hash] = value;
@@ -28,4 +32,9 @@ export function init() {
     Array.from(document.getElementsByClassName('point-' + hash)).forEach(item => item.remove());
     delete points[hash];
   }
+}
+
+export function setPoints(data) {
+  points = data;
+  initPoints();
 }
