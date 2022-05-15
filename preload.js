@@ -2,7 +2,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('api', {
   getHash: () => ipcRenderer.sendSync('getHash'),
-  save: async (data, format) => await ipcRenderer.invoke('save', data, format),
+  save: async (format, data, path) => await ipcRenderer.invoke('save', format, data, path),
   load: async () => await ipcRenderer.invoke('load'),
   setTitle: async val => await ipcRenderer.invoke('setTitle', val),
   getTitle: async val => await ipcRenderer.invoke('getTitle'),

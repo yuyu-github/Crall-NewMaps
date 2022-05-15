@@ -1,6 +1,7 @@
 import { background } from "../../map/background/background.js";
 import { objects } from "../../map/object/object.js";
 import { points } from "../../map/point/point.js";
+import { path } from "../project.js";
 import { elementsToErase } from "./elements_to_erase.js";
 
 export const format = 1;
@@ -9,7 +10,7 @@ export function init() {
   api.onSave(save);
 }
 
-export function save() {
+export function save(overwrite = false) {
   //軽量化
   let lightweightObjects = JSON.parse(JSON.stringify(objects)); //ディープコピー
   let lightweightPoints = JSON.parse(JSON.stringify(points));
@@ -51,5 +52,5 @@ export function save() {
     'points': lightweightPoints,
   }
 
-  api.save(data, format);
+  api.save(format, data, overwrite ? path : '');
 }
