@@ -1,10 +1,10 @@
 import { elementsToErase } from "./elements_to_erase.js";
-import { setBackground } from "../map/background/background.js";
-import { setTiles, tiles } from "../map/tile.js";
-import { objects, setObjects } from "../map/object/object.js";
-import { points, setPoints } from "../map/point/point.js";
-import { setBorders } from "../map/object/border/border.js";
-import { draw } from "../map/map.js";
+import { setBackground } from "../../map/background/background.js";
+import { setTiles, tiles } from "../../map/tile.js";
+import { objects, setObjects } from "../../map/object/object.js";
+import { points, setPoints } from "../../map/point/point.js";
+import { setBorders } from "../../map/object/border/border.js";
+import { draw } from "../../map/map.js";
 
 export function init() {
   api.onLoad(load);

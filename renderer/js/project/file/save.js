@@ -1,6 +1,6 @@
-import { background } from "../map/background/background.js";
-import { objects } from "../map/object/object.js";
-import { points } from "../map/point/point.js";
+import { background } from "../../map/background/background.js";
+import { objects } from "../../map/object/object.js";
+import { points } from "../../map/point/point.js";
 import { elementsToErase } from "./elements_to_erase.js";
 
 export const format = 1;
