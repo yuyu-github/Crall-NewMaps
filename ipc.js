@@ -32,6 +32,7 @@ module.exports = mainWindow => {
     });
     if (path != undefined) {
       stream.pipe(fs.createWriteStream(path)); //指定したパスに保存
+      mainWindow.webContents.send('setPath', path);
     }
   })
 

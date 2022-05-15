@@ -6,6 +6,7 @@ export function init() {
   initFile();
 
   setPath('');
+  api.onSetPath((e, val) => setPath(val));
 }
 
 export function setPath(val) {
