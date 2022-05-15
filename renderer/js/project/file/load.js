@@ -5,17 +5,20 @@ import { objects, setObjects } from "../../map/object/object.js";
 import { points, setPoints } from "../../map/point/point.js";
 import { setBorders } from "../../map/object/border/border.js";
 import { draw } from "../../map/map.js";
+import { setPath } from "../project.js";
 
 export function init() {
   api.onLoad(load);
-  api.onLoadResult((e, data) => loadData(data.format, data.data));
+  api.onLoadResult((e, data) => loadData(data.format, data.data, data.path));
 }
 
 export function load() {
   api.load(); 
 }
 
-export function loadData(format, data) {
+export function loadData(format, data, path) {
+  setPath(path);
+
   setBackground(data.background);
 
   setTiles([]);

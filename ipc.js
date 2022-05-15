@@ -53,6 +53,7 @@ module.exports = mainWindow => {
       mainWindow.webContents.send('loadResult', {
         format: format,
         data: JSON.parse(await zip.file('data.json').async('string')),
+        path: path[0],
       });
     } catch (e) {
       console.error(e);
