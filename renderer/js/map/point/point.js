@@ -20,9 +20,9 @@ export function initPoints() {
       obj.linkedPoints.splice(obj.linkedPoints.indexOf(hash), 1);
 
       //中継点の数がポイントの場合0個、ラインの場合1個以下、エリアの場合2個以下のときオブジェクトを削除
-      if (obj.type == 'point' && obj.linkedPoints.length == 0) objects.delete(item);
-      else if (obj.type == 'line' && obj.linkedPoints.length <= 1) objects.delete(item);
-      else if (obj.type == 'area' && obj.linkedPoints.length <= 2) objects.delete(item);
+      if (obj.form == 'point' && obj.linkedPoints.length == 0) objects.delete(item);
+      else if (obj.form == 'line' && obj.linkedPoints.length <= 1) objects.delete(item);
+      else if (obj.form == 'area' && obj.linkedPoints.length <= 2) objects.delete(item);
       else {
         objects.update(item);
         drawObject(obj);

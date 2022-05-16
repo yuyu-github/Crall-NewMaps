@@ -13,7 +13,7 @@ export function init() {
 export function initTiles() {
   tiles.addObject = hash => {
     let object = objects[hash];
-    let type = object.type;
+    let form = object.form;
 
     let pointPos = []; //pointの位置を記録
     let tileWithLine = []; //lineのあるタイルを記録
@@ -29,9 +29,9 @@ export function initTiles() {
       tileWithLine.push([x, y]);
       if (firstPointPos == undefined) firstPointPos = { x: point?.x, y: point?.y }
     }
-    if (type == 'area') pointPos.push(firstPointPos);
+    if (form == 'area') pointPos.push(firstPointPos);
 
-    if (type == 'line' || type == 'area') {
+    if (form == 'line' || form == 'area') {
       //一つの直線ごとに実行
       for (let i = 0; i < pointPos.length - 1; i++) {
         let startPointPos = pointPos[i];
@@ -81,7 +81,7 @@ export function initTiles() {
       }
     }
 
-    if (type == 'area' && object.closed) {
+    if (form == 'area' && object.closed) {
       //タイルを位置ごとに配列に入れる
       let tilePosList = [];
       let minIndexY = 0;

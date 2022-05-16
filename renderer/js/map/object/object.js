@@ -77,7 +77,7 @@ export function initObjects() {
         });
       }
     });
-    if (objects[hash].type == 'area' && objects[hash].closed) {
+    if (objects[hash].form == 'area' && objects[hash].closed) {
       borders.add({
         point1: objects[hash].linkedPoints.slice(-1)[0],
         point2: objects[hash].linkedPoints[0],

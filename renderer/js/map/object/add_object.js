@@ -219,7 +219,7 @@ export function addPoint(position) {
     y: position[1],
   })] : []
   return objects.add({
-    type: 'point',
+    form: 'point',
     linkedPoints: linkedPoints,
   });
 }
@@ -233,7 +233,7 @@ export function addLine(list) {
     }))
   }
   return objects.add({
-    type: 'line',
+    form: 'line',
     linkedPoints: linkedPoints,
   });
 }
@@ -247,7 +247,7 @@ export function addArea(list, closed = true) {
     }));
   }
   return objects.add({
-    type: 'area',
+    form: 'area',
     linkedPoints: linkedPoints,
     closed: closed,
   });

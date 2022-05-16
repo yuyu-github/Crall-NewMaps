@@ -14,7 +14,7 @@ export function draw(object) {
     Array.from(document.getElementsByClassName('object-' + hash + '-border')).forEach(item => item.remove());
   }
   let className = 'object ' + (hash == '' ? '' : 'object-' + hash);
-  switch (object.type) {
+  switch (object.form) {
     case 'point': {
       if (object.linkedPoints.length != 0 || object.isPreview) {
         let point = points[object.linkedPoints[0]];
