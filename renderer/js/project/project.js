@@ -7,7 +7,7 @@ export function init() {
   initFile();
 
   setPath('');
-  setSaved(false);
+  setSaved(true);
   api.onSetPath((e, val) => setPath(val));
   api.onSetSaved((e, val) => setSaved(val));
 }
