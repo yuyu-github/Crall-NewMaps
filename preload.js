@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld('api', {
   load: async () => await ipcRenderer.invoke('load'),
   setTitle: async val => await ipcRenderer.invoke('setTitle', val),
   getTitle: async val => await ipcRenderer.invoke('getTitle'),
+  showMessageBox: async options => await ipcRenderer.invoke('showMessageBox', options),
   
   onSave: callback => ipcRenderer.on('save', callback),
   onLoad: callback => ipcRenderer.on('load', callback),

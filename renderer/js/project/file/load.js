@@ -5,8 +5,8 @@ import { objects, setObjects } from "../../map/object/object.js";
 import { points, setPoints } from "../../map/point/point.js";
 import { setBorders } from "../../map/object/border/border.js";
 import { draw, mapEl } from "../../map/map.js";
-import { setPath, setSaved } from "../project.js";
-import { format } from "./save.js";
+import { path, saved, setPath, setSaved } from "../project.js";
+import { format, save } from "./save.js";
 
 export function init() {
   api.onLoad(load);
@@ -16,14 +16,17 @@ export function init() {
     background: '',
     objects: {},
     points: {},
-  }, ''))
+  }, '', true))
 }
 
-export function load() {
+export async function load() {
+  if (!(await confirmSave())) return;
   api.load(); 
 }
 
-export function loadData(format, data, path) {
+export async function loadData(format, data, path, isConfirmSave = false) {
+  if (isConfirmSave && !(await confirmSave())) return;
+
   mapEl.innerHTML = '';
 
   setTiles([]);
@@ -60,4 +63,21 @@ export function loadData(format, data, path) {
 
   setPath(path);
   setSaved(true);
+}
+
+export async function confirmSave() {
+  if (!saved) {
+    let result = await api.showMessageBox({
+      type: 'warning',
+      title: '保存されていません',
+      message: (await api.getTitle()).replace(/\*? - Crall NewMaps$/, '') + 'は保存されていません',
+      buttons: ['保存', '保存しない', 'キャンセル'],
+      cancelId: 2,
+    })
+
+    if (result.response == 0) save(path);
+
+    return (result.response != 2); //キャンセルされたかどうか
+  }
+  else return true;
 }

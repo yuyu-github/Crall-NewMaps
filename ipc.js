@@ -73,4 +73,8 @@ module.exports = mainWindow => {
   ipcMain.handle('getTitle', () => {
     return mainWindow.getTitle();
   });
+
+  ipcMain.handle('showMessageBox', async (e, options) => {
+    return await dialog.showMessageBox(mainWindow, options);
+  })
 }
