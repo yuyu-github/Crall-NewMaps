@@ -52,6 +52,12 @@ export async function loadData(format, data, path, isConfirmSave = false) {
     for (let hash of orgObjects[item].linkedPoints) {
       orgPoints[hash].linkedObjects.push(item);
     }
+
+    //formatが1の場合typeをformに変更
+    if (format == 1) {
+      orgObjects[item].form = orgObjects[item].type;
+      delete orgObjects[item].type;
+    }
   }
 
   setPoints(JSON.parse(JSON.stringify(orgPoints)));
