@@ -4,7 +4,7 @@ import { points } from "../../map/point/point.js";
 import { path } from "../project.js";
 import { elementsToErase } from "./elements_to_erase.js";
 
-export const format = 1;
+export const format = 2;
 
 export function init() {
   api.onSave(save);
