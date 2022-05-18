@@ -3,7 +3,7 @@ const path = require('path');
 const { env } = require('process');
 
 let mainWindow;
-app.on('ready', () => {
+function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1500,
     height: 900,
@@ -28,13 +28,15 @@ app.on('ready', () => {
     ]));
   }
   else Menu.setApplicationMenu(Menu.buildFromTemplate(require('./menu.js')(mainWindow)))
-  
+
   mainWindow.loadFile('renderer/index.html');
 
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
-});
+}
+
+app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
