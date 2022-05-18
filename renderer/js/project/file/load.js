@@ -80,6 +80,7 @@ export async function confirmSave() {
       message: (await api.getTitle()).replace(/\*? - Crall NewMaps$/, '') + 'は保存されていません',
       buttons: ['保存', '保存しない', 'キャンセル'],
       cancelId: 2,
+      noLink: true
     })
 
     if (result.response == 0) save(path);
