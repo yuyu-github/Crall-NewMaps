@@ -11,6 +11,7 @@ import { format, save } from "./save.js";
 export function init() {
   api.onLoad(load);
   api.onLoadResult((e, data) => loadData(data.format, data.data, data.path));
+  api.onConfirmSave(async e => e.sender.send('confirmSaveResult', await confirmSave()));
 
   api.onCreateNew(() => loadData(format, {
     background: '',

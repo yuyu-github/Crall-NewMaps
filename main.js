@@ -31,6 +31,14 @@ function createWindow() {
 
   mainWindow.loadFile('renderer/index.html');
 
+  mainWindow.on('close', e => {
+    mainWindow.webContents.send('confirmSave');
+    e.preventDefault();
+  })
+  ipcMain.on('confirmSaveResult', (e, result) => {
+    if (result) mainWindow.destroy();
+  })
+
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
