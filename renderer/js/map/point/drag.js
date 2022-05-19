@@ -18,6 +18,8 @@ export function dragEvent(hash, e, pointObj = e.currentTarget) {
   let point = points[hash];
 
   if (!(isDraggingPoint)) {
+    isDraggingPoint = true;
+    
     let x;
     let y;
     let startX = point.x;
@@ -26,7 +28,6 @@ export function dragEvent(hash, e, pointObj = e.currentTarget) {
     let startMouseY = e.clientY;
     let startElX = parseInt(pointObj.getAttribute('cx'));
     let startElY = parseInt(pointObj.getAttribute('cy'));
-    isDraggingPoint = true;
 
     mapEl.addEventListener('mousemove', moveFn);
     function moveFn(e) {

@@ -1,9 +1,11 @@
 import { centerX, centerY, elCenterX, elCenterY, mapEl, addSVGElement, zoomLevel } from '../map.js'
 import { mode } from '../../mode.js'
-import { getHash } from './object.js';
+import { getHash, objects } from './object.js';
 import { points } from '../point/point.js';
 import { bigPointR, draw as drawPoint } from '../point/draw.js'
 import { draw as drawBorder } from './border/draw.js';
+import { isDraggingPoint } from '../point/drag.js';
+import { isDraggingMap } from '../drag.js';
 
 export const lineWidth = 5;
 
@@ -77,10 +79,7 @@ export function draw(object) {
         }
       }
 
-      returnValue[2] = [];
-      object.borders?.forEach(item => {
-        returnValue[2].push(drawBorder(item));
-      });
+      returnValue[2] = dragObjectBorder(hash);
 
       return returnValue;
     }
@@ -136,12 +135,18 @@ export function draw(object) {
         }
       }
 
-      returnValue[2] = [];
-      object.borders?.forEach(item => {
-        returnValue[2].push(drawBorder(item));
-      });
+      returnValue[2] = dragObjectBorder(hash);
 
       return returnValue;
     }
+  }
+}
+
+export function dragObjectBorder(objectHash) {
+  let returnValue = [];
+  if (!(isDraggingPoint || isDraggingMap)) {
+    objects[objectHash].borders?.forEach(item => {
+      returnValue.push(drawBorder(item));
+    });
   }
 }
