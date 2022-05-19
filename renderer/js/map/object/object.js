@@ -93,7 +93,7 @@ export function initObjects() {
     Array.from(document.getElementsByClassName('object-' + hash + '-border')).forEach(item => item.remove());
 
     for (let item of objects[hash]?.linkedPoints ?? []) {
-      if (points[item].linkedObjects.length == 1) points.delete(item);
+      if (points[item].linkedObjects.length == 1) points.delete(item, false);
       else points[item].linkedObjects.splice(points[item].linkedObjects.indexOf(hash), 1);
     }
     for (let item of objects[hash]?.linkedTiles ?? []) {
