@@ -79,7 +79,7 @@ export function draw(object, onlyPreview = false) {
           }
         }
 
-        returnValue[2] = dragObjectBorder(hash);
+        if (!onlyPreview) returnValue[2] = dragObjectBorder(hash);
 
         return returnValue;
       }
@@ -137,7 +137,7 @@ export function draw(object, onlyPreview = false) {
           }
         }
 
-        returnValue[2] = dragObjectBorder(hash);
+        if (!onlyPreview) returnValue[2] = dragObjectBorder(hash);
 
         return returnValue;
       }
