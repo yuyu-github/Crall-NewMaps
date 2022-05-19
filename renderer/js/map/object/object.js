@@ -68,6 +68,9 @@ export function initObjects() {
       item.remove()
     });
 
+    objects[hash].borders?.forEach(item => borders.delete(item))
+    objects[hash].borders = [];
+
     objects[hash].linkedPoints.forEach((item, i) => {
       if (objects[hash].linkedPoints.length - 1 > i) {
         borders.add({

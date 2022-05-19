@@ -45,7 +45,7 @@ export function dragEvent(hash, e, pointObj = e.currentTarget) {
       for (let hash of point.linkedObjects) {
         let object = objects[hash];
         objects.update(hash);
-        if (!object.isPreview) drawObject(object);
+        drawObject(object);
       }
     }
 

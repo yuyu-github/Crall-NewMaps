@@ -53,7 +53,7 @@ export function init() {
       function moveFn(e) {
         object.previewX = (e.clientX - elLeft - elCenterX) * 2 ** -zoomLevel + centerX;
         object.previewY = (e.clientY - elTop - elCenterY) * 2 ** -zoomLevel + centerY;
-        draw(object);
+        draw(object, true);
       }
       mapEl.addEventListener('mousemove', moveFn)
     }
@@ -66,18 +66,16 @@ export function init() {
 
       let hash = addLine([], false)
       let object = objects[hash];
-      let lastPoint = null;
 
       function end() {
         document.body.removeEventListener('click', bodyClickFn);
         mapEl.removeEventListener('mouseenter', enterFn);
         mapEl.removeEventListener('mouseleave', leaveFn);
         mapEl.removeEventListener('click', clickFn);
-        lastPoint?.removeEventListener('click', finish);
+        document.getElementsByClassName('point-' + object.linkedPoints.slice(-1)[0])[0]?.removeEventListener('click', finish);
         mapEl.removeEventListener('mousemove', moveFn);
         object.isPreview = false;
         mapEl.style.cursor = 'default';
-        if (lastPoint != null) lastPoint.style.cursor = 'default';
         isediting = false;
       }
 
@@ -95,13 +93,10 @@ export function init() {
       }
 
       function update() {
-        let drawresult = draw(object);
-        if (drawresult[1].length > 1) {
-          lastPoint?.removeEventListener('click', finish)
-          if (lastPoint != null) lastPoint.style.cursor = 'default';
-          lastPoint = drawresult[1].slice(-1)[0];
-          lastPoint?.addEventListener('click', finish);
-          if (lastPoint != null) lastPoint.style.cursor = 'pointer';
+        draw(object, true);
+        if (object.linkedPoints.length >= 2) {
+          document.getElementsByClassName('point-' + object.linkedPoints.slice(-2)[0])[0]?.removeEventListener('click', finish);
+          document.getElementsByClassName('point-' + object.linkedPoints.slice(-1)[0])[0]?.addEventListener('click', finish);
         }
       }
 
@@ -113,7 +108,7 @@ export function init() {
           y: (e.clientY - elTop - elCenterY) * 2 ** -zoomLevel + centerY,
         }));
         object.isPreview = false;
-        draw(object)
+        draw(object);
         update();
       }
 
@@ -140,18 +135,16 @@ export function init() {
 
       let hash = addArea([], false)
       let object = objects[hash];
-      let firstPoint = null;
 
       function end() {
         document.body.removeEventListener('click', bodyClickFn);
         mapEl.removeEventListener('mouseenter', enterFn);
         mapEl.removeEventListener('mouseleave', leaveFn);
         mapEl.removeEventListener('click', clickFn);
-        firstPoint?.removeEventListener('click', finish);
+        document.getElementsByClassName('point-' + object.linkedPoints[0])[0]?.removeEventListener('click', finish);
         mapEl.removeEventListener('mousemove', moveFn);
         object.isPreview = false;
         mapEl.style.cursor = 'default';
-        if (firstPoint != null) firstPoint.style.cursor = 'default';
         isediting = false;
       }
 
@@ -169,11 +162,9 @@ export function init() {
       }
 
       function update() {
-        let drawresult = draw(object);
-        if (drawresult[1].length > 2) {
-          firstPoint = drawresult[1][0];
-          firstPoint?.addEventListener('click', finish);
-          if (firstPoint != null) firstPoint.style.cursor = 'pointer'
+        draw(object, true);
+        if (object.linkedPoints.length >= 3) {
+          document.getElementsByClassName('point-' + object.linkedPoints[0])[0]?.addEventListener('click', finish);
         }
       }
 
@@ -185,7 +176,7 @@ export function init() {
           y: (e.clientY - elTop - elCenterY) * 2 ** -zoomLevel + centerY,
         }));
         object.isPreview = false;
-        draw(object)
+        draw(object);
       }
 
       function finish() {
