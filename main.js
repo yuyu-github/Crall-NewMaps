@@ -12,7 +12,7 @@ function createWindow() {
     },
   });
 
-  require('./ipc.js')(mainWindow);
+  require('./ipc/ipc.js')(mainWindow);
 
   if (env.TYPE == 'debug') {
     //デバッグ時のみデバッグメニューを表示
