@@ -22,7 +22,7 @@ export function draw(object, onlyPreview = false) {
       case 'point': {
         if (object.linkedPoints.length != 0 || object.isPreview) {
           let point = points[object.linkedPoints[0]];
-          return [[addSVGElement('circle', {
+          addSVGElement('circle', {
             'class': className + ' preview',
             'cx': elCenterX + ((object.isPreview ? object.previewX : point.x) - centerX) * 2 ** zoomLevel + 'px',
             'cy': elCenterY + ((object.isPreview ? object.previewY : point.y) - centerY) * 2 ** zoomLevel + 'px',
@@ -33,12 +33,13 @@ export function draw(object, onlyPreview = false) {
             'fill': 'red',
             'fill-opacity': object.isPreview ? '0.15' : '0.3',
             'style': object.isPreview ? 'pointer-events: none;' : '',
-          }, 20002)], drawPoint(object.linkedPoints[0], true, true)];
-        } else return null;
+          }, 20002);
+          drawPoint(object.linkedPoints[0], true, true);
+
+          break;
+        } else return;
       }
       case 'line': {
-        let returnValue = [[], []];
-        
         if (object.linkedPoints.length != 0) {
           let SVGPoints = '';
           let lastPoint = [];
@@ -46,12 +47,12 @@ export function draw(object, onlyPreview = false) {
           [...object.linkedPoints, ...(object.isPreview ? [null] : []) /*プレビューなら一要素追加*/].forEach((hash, i) => {
             let point = points[hash];
 
-            if (!(object.isPreview && i == object.linkedPoints.length) && !onlyPreview) returnValue[1].push(drawPoint(hash));
+            if (!(object.isPreview && i == object.linkedPoints.length) && !onlyPreview) drawPoint(hash);
 
             //プレビューしている線の場合、色を薄くする
             if (object.isPreview && i == object.linkedPoints.length) {
               //最後の線のみ別で描画
-              returnValue[0][1] = addSVGElement('line', {
+              addSVGElement('line', {
                 'class': className + ' preview',
                 'x1': elCenterX + (lastPoint.x - centerX) * 2 ** zoomLevel + 'px',
                 'y1': elCenterY + (lastPoint.y - centerY) * 2 ** zoomLevel + 'px',
@@ -69,7 +70,7 @@ export function draw(object, onlyPreview = false) {
           });
 
           if (object.linkedPoints.length > 1 && !onlyPreview) {
-            returnValue[0][0] = addSVGElement('polyline', {
+            addSVGElement('polyline', {
               'class': className,
               'points': SVGPoints,
               'stroke': 'blue',
@@ -79,13 +80,11 @@ export function draw(object, onlyPreview = false) {
           }
         }
 
-        if (!onlyPreview) returnValue[2] = dragObjectBorder(hash);
+        if (!onlyPreview) dragObjectBorder(hash);
 
-        return returnValue;
+        break;
       }
       case 'area': {
-        let returnValue = [[], []];
-
         if (object.linkedPoints.length != 0) {
           let SVGPoints = '';
           let lastPoint = [];
@@ -93,12 +92,12 @@ export function draw(object, onlyPreview = false) {
           [...object.linkedPoints, ...(object.isPreview ? [null] : [])].forEach((hash, i) => {
             let point = points[hash];
 
-            if (!(object.isPreview && i == object.linkedPoints.length) && !onlyPreview) returnValue[1].push(drawPoint(hash));
+            if (!(object.isPreview && i == object.linkedPoints.length) && !onlyPreview) drawPoint(hash);
             
             //プレビューしている線の場合、色を薄くする
             if (object.isPreview && i == object.linkedPoints.length) {
               //最後の線のみ別で描画
-              returnValue[0][1] = addSVGElement('line', {
+              addSVGElement('line', {
                 'class': className + ' preview',
                 'x1': elCenterX + (lastPoint.x - centerX) * 2 ** zoomLevel + 'px',
                 'y1': elCenterY + (lastPoint.y - centerY) * 2 ** zoomLevel + 'px',
@@ -117,7 +116,7 @@ export function draw(object, onlyPreview = false) {
     
           if (!onlyPreview) {
             if (object.closed) {
-              returnValue[0][0] = addSVGElement('polygon', {
+              addSVGElement('polygon', {
                 'class': className,
                 'points': SVGPoints,
                 'stroke': 'limegreen',
@@ -126,7 +125,7 @@ export function draw(object, onlyPreview = false) {
                 'fill-opacity': '0.3',
               }, 20000);
             } else {
-              returnValue[0][0] = addSVGElement('polyline', {
+              addSVGElement('polyline', {
                 'class': className,
                 'points': SVGPoints,
                 'stroke': 'limegreen',
@@ -137,19 +136,18 @@ export function draw(object, onlyPreview = false) {
           }
         }
 
-        if (!onlyPreview) returnValue[2] = dragObjectBorder(hash);
+        if (!onlyPreview) dragObjectBorder(hash);
 
-        return returnValue;
+        break;
       }
     }
   }
 }
 
 export function dragObjectBorder(objectHash) {
-  let returnValue = [];
   if (!(isDraggingPoint || isDraggingMap)) {
     objects[objectHash].borders?.forEach(item => {
-      returnValue.push(drawBorder(item));
+      drawBorder(item);
     });
   }
 }
