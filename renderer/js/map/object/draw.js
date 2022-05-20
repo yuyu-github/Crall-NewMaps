@@ -1,8 +1,8 @@
-import { centerX, centerY, elCenterX, elCenterY, mapEl, addSVGElement, zoomLevel } from '../map.js'
+import { centerX, centerY, elCenterX, elCenterY, mapEl, addSVGElement, zoomLevel, isOffScreen } from '../map.js'
 import { mode } from '../../mode.js'
 import { getHash, objects } from './object.js';
 import { points } from '../point/point.js';
-import { bigPointR, draw as drawPoint } from '../point/draw.js'
+import { bigPointR, draw as drawPoint, pointR } from '../point/draw.js'
 import { draw as drawBorder } from './border/draw.js';
 import { isDraggingPoint } from '../point/drag.js';
 import { isDraggingMap } from '../drag.js';
@@ -47,7 +47,9 @@ export function draw(object, onlyPreview = false) {
           [...object.linkedPoints, ...(object.isPreview ? [null] : []) /*プレビューなら一要素追加*/].forEach((hash, i) => {
             let point = points[hash];
 
-            if (!(object.isPreview && i == object.linkedPoints.length) && !onlyPreview) drawPoint(hash);
+            if (!(object.isPreview && i == object.linkedPoints.length) && !onlyPreview) {
+              if (!isOffScreen(point.x, point.y, pointR)) drawPoint(hash);
+            }
 
             //プレビューしている線の場合、色を薄くする
             if (object.isPreview && i == object.linkedPoints.length) {
@@ -92,7 +94,9 @@ export function draw(object, onlyPreview = false) {
           [...object.linkedPoints, ...(object.isPreview ? [null] : [])].forEach((hash, i) => {
             let point = points[hash];
 
-            if (!(object.isPreview && i == object.linkedPoints.length) && !onlyPreview) drawPoint(hash);
+            if (!(object.isPreview && i == object.linkedPoints.length) && !onlyPreview) {
+              if (!isOffScreen(point.x, point.y, pointR)) drawPoint(hash);
+            }
             
             //プレビューしている線の場合、色を薄くする
             if (object.isPreview && i == object.linkedPoints.length) {

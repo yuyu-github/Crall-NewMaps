@@ -65,6 +65,12 @@ export function draw() {
   setZoom(zoomLevel)
 }
 
+export function isOffScreen(x, y, distance) {
+  let isXOffScreen = Math.abs((x - centerX) * 2 ** zoomLevel) - distance > elCenterX;
+  let isYOffScreen = Math.abs((y - centerY) * 2 ** zoomLevel) - distance > elCenterY;
+  return isXOffScreen || isYOffScreen;
+}
+
 export function createSVGElement(name, attrs) {
   let el = document.createElementNS("http://www.w3.org/2000/svg", name);
   for (let attr in attrs) {
