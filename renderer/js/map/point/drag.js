@@ -42,10 +42,9 @@ export function dragEvent(hash, e, pointObj = e.currentTarget) {
       el.setAttribute('cy', startElY + Math.floor(movingDistanceY) + 'px');
       point.x = x;
       point.y = y;
-      for (let hash of point.linkedObjects) {
-        let object = objects[hash];
-        objects.update(hash);
-        drawObject(object);
+      for (let objectHash of point.linkedObjects) {
+        let object = objects[objectHash];
+        drawObject(object, false, [hash]);
       }
     }
 
@@ -53,6 +52,12 @@ export function dragEvent(hash, e, pointObj = e.currentTarget) {
       mapEl.removeEventListener('mousemove', moveFn);
       mapEl.removeEventListener('mouseup', fn);
       isDraggingPoint = false;
+
+      for (let objectHash of point.linkedObjects) {
+        let object = objects[objectHash];
+        objects.update(objectHash);
+        drawObject(object);
+      }
     })
   }
 }

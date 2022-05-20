@@ -6,10 +6,11 @@ import { bigPointR, draw as drawPoint, pointR } from '../point/draw.js'
 import { draw as drawBorder } from './border/draw.js';
 import { isDraggingPoint } from '../point/drag.js';
 import { isDraggingMap } from '../drag.js';
+import { borders } from './border/border.js';
 
 export const lineWidth = 5;
 
-export function draw(object, onlyPreview = false) {
+export function draw(object, onlyPreview = false, pointToDraw = null) {
   let hash = getHash(object);
   if (hash != '') {
     if (!onlyPreview) {
@@ -47,7 +48,8 @@ export function draw(object, onlyPreview = false) {
           [...object.linkedPoints, ...(object.isPreview ? [null] : []) /*プレビューなら一要素追加*/].forEach((hash, i) => {
             let point = points[hash];
 
-            if (!(object.isPreview && i == object.linkedPoints.length) && !onlyPreview) {
+            if (!(object.isPreview && i == object.linkedPoints.length) &&
+              ((!onlyPreview && pointToDraw == null) || pointToDraw?.includes(hash))) {
               if (!isOffScreen(point.x, point.y, pointR)) drawPoint(hash);
             }
 
@@ -82,7 +84,7 @@ export function draw(object, onlyPreview = false) {
           }
         }
 
-        if (!onlyPreview) dragObjectBorder(hash);
+        if (!onlyPreview || pointToDraw != null) dragObjectBorder(hash, pointToDraw);
 
         break;
       }
@@ -94,7 +96,8 @@ export function draw(object, onlyPreview = false) {
           [...object.linkedPoints, ...(object.isPreview ? [null] : [])].forEach((hash, i) => {
             let point = points[hash];
 
-            if (!(object.isPreview && i == object.linkedPoints.length) && !onlyPreview) {
+            if (!(object.isPreview && i == object.linkedPoints.length) &&
+              ((!onlyPreview && pointToDraw == null) || pointToDraw?.includes(hash))) {
               if (!isOffScreen(point.x, point.y, pointR)) drawPoint(hash);
             }
             
@@ -140,7 +143,7 @@ export function draw(object, onlyPreview = false) {
           }
         }
 
-        if (!onlyPreview) dragObjectBorder(hash);
+        if (!onlyPreview || pointToDraw != null) dragObjectBorder(hash, pointToDraw);
 
         break;
       }
@@ -148,10 +151,11 @@ export function draw(object, onlyPreview = false) {
   }
 }
 
-export function dragObjectBorder(objectHash) {
+export function dragObjectBorder(objectHash, pointToDraw = null) {
   if (!(isDraggingPoint || isDraggingMap)) {
     objects[objectHash].borders?.forEach(item => {
-      drawBorder(item);
+      let obj = borders[item];
+      if (pointToDraw == null || (pointToDraw.includes(obj.point1) || pointToDraw.includes(obj.point2))) drawBorder(item);
     });
   }
 }

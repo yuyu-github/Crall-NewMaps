@@ -95,20 +95,21 @@ export function init() {
       function update() {
         draw(object, true);
         if (object.linkedPoints.length >= 2) {
-          document.getElementsByClassName('point-' + object.linkedPoints.slice(-2)[0])[0]?.removeEventListener('click', finish);
-          document.getElementsByClassName('point-' + object.linkedPoints.slice(-1)[0])[0]?.addEventListener('click', finish);
+          document.getElementsByClassName('point-' + object.linkedPoints.slice(-2)[0])[0]?.removeEventListener('mouseup', finish);
+          document.getElementsByClassName('point-' + object.linkedPoints.slice(-1)[0])[0]?.addEventListener('mouseup', finish);
         }
       }
 
       mapEl.addEventListener('click', clickFn);
       function clickFn(e) {
         mapEl.removeEventListener('mouseleave', leaveFn);
-        objects.addPoint(hash, points.add({
-          x: (e.clientX - elLeft - elCenterX) * 2 ** -zoomLevel + centerX, 
+        let pointHash = points.add({
+          x: (e.clientX - elLeft - elCenterX) * 2 ** -zoomLevel + centerX,
           y: (e.clientY - elTop - elCenterY) * 2 ** -zoomLevel + centerY,
-        }));
+        });
+        objects.addPoint(hash, pointHash);
         object.isPreview = false;
-        draw(object);
+        draw(object, false, [pointHash]);
         update();
       }
 
@@ -171,12 +172,13 @@ export function init() {
       mapEl.addEventListener('click', clickFn);
       function clickFn(e) {
         mapEl.removeEventListener('mouseleave', leaveFn);
-        objects.addPoint(hash, points.add({
-          x: (e.clientX - elLeft - elCenterX) * 2 ** -zoomLevel + centerX, 
+        let pointHash = points.add({
+          x: (e.clientX - elLeft - elCenterX) * 2 ** -zoomLevel + centerX,
           y: (e.clientY - elTop - elCenterY) * 2 ** -zoomLevel + centerY,
-        }));
+        });
+        objects.addPoint(hash, pointHash);
         object.isPreview = false;
-        draw(object);
+        draw(object, false, [pointHash]);
       }
 
       function finish() {
