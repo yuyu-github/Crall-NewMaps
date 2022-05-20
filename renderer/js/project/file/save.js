@@ -7,7 +7,7 @@ import { elementsToErase } from "./elements_to_erase.js";
 export const format = 2;
 
 export function init() {
-  api.onSave(save);
+  api.onSave((e, overwrite) => save(overwrite));
 }
 
 export function save(overwrite = false) {
