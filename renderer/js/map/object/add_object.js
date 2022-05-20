@@ -165,7 +165,7 @@ export function init() {
       function update() {
         draw(object, true);
         if (object.linkedPoints.length >= 3) {
-          document.getElementsByClassName('point-' + object.linkedPoints[0])[0]?.addEventListener('click', finish);
+          document.getElementsByClassName('point-' + object.linkedPoints[0])[0]?.addEventListener('mouseup', finish);
         }
       }
 
