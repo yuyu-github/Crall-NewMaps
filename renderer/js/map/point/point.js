@@ -14,7 +14,7 @@ export function initPoints() {
     return hash;
   }
 
-  points.delete = (hash, removeFromObject) => {
+  points.delete = (hash, removeFromObject = true) => {
     if (removeFromObject) {
       for (let item of points[hash].linkedObjects) {
         let obj = objects[item];
