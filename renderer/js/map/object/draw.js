@@ -23,7 +23,7 @@ export function draw(object, onlyPreview = false) {
         if (object.linkedPoints.length != 0 || object.isPreview) {
           let point = points[object.linkedPoints[0]];
           return [[addSVGElement('circle', {
-            'class': className,
+            'class': className + ' preview',
             'cx': elCenterX + ((object.isPreview ? object.previewX : point.x) - centerX) * 2 ** zoomLevel + 'px',
             'cy': elCenterY + ((object.isPreview ? object.previewY : point.y) - centerY) * 2 ** zoomLevel + 'px',
             'r': bigPointR + 'px',
