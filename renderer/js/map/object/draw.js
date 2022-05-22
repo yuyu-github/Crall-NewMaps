@@ -1,4 +1,4 @@
-import { centerX, centerY, elCenterX, elCenterY, mapEl, addSVGElement, zoomLevel, isOffScreen } from '../map.js'
+import { centerX, centerY, elCenterX, elCenterY, mapEl, addSVGElement, zoomLevel, isOffScreen, isLineOffScreen } from '../map.js'
 import { mode } from '../../mode.js'
 import { getHash, objects } from './object.js';
 import { points } from '../point/point.js';
@@ -155,7 +155,10 @@ export function dragObjectBorder(objectHash, pointToDraw = null) {
   if (!(isDraggingPoint || isDraggingMap)) {
     objects[objectHash].borders?.forEach(item => {
       let obj = borders[item];
-      if (pointToDraw == null || (pointToDraw.includes(obj.point1) || pointToDraw.includes(obj.point2))) drawBorder(item);
+      if (pointToDraw == null || (pointToDraw.includes(obj.point1) || pointToDraw.includes(obj.point2))) {
+        if (!isLineOffScreen(points[obj.point1].x, points[obj.point1].y, points[obj.point2].x, points[obj.point2].y, pointR))
+          drawBorder(item);
+      }
     });
   }
 }

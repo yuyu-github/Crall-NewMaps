@@ -65,10 +65,27 @@ export function draw() {
   setZoom(zoomLevel)
 }
 
-export function isOffScreen(x, y, distance) {
+export function isOffScreen(x, y, distance = 0) {
   let isXOffScreen = Math.abs((x - centerX) * 2 ** zoomLevel) - distance > elCenterX;
   let isYOffScreen = Math.abs((y - centerY) * 2 ** zoomLevel) - distance > elCenterY;
   return isXOffScreen || isYOffScreen;
+}
+
+export function isLineOffScreen(x1, y1, x2, y2, distance = 0) {
+  if (!isOffScreen(x1, y1, distance) || !isOffScreen(x2, y2, distance)) return false;
+
+  let isX1OffScreen = Math.abs((x1 - centerX) * 2 ** zoomLevel) - distance > elCenterX;
+  let isY1OffScreen = Math.abs((y1 - centerY) * 2 ** zoomLevel) - distance > elCenterY;
+  let isX2OffScreen = Math.abs((x2 - centerX) * 2 ** zoomLevel) - distance > elCenterX;
+  let isY2OffScreen = Math.abs((y2 - centerY) * 2 ** zoomLevel) - distance > elCenterY;
+
+  if (isX1OffScreen && isY1OffScreen && isX2OffScreen && isY2OffScreen) return true; //すべて画面外の場合
+
+  //同じ方向の画面外に出ている場合
+  if (isX1OffScreen && isX2OffScreen && Math.sign(x1 - centerX) == Math.sign(x2 - centerX)) return true;
+  if (isY1OffScreen && isY2OffScreen && Math.sign(y1 - centerY) == Math.sign(y2 - centerY)) return true;
+
+  return null; //判定が難しい場合nullを返す
 }
 
 export function createSVGElement(name, attrs) {
