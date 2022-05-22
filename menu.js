@@ -1,5 +1,3 @@
-const { mainWindow } = require('./main.js');
-
 module.exports = mainWindow => [
   {
     label: 'ファイル',

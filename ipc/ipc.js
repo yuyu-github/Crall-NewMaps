@@ -6,7 +6,7 @@ module.exports = mainWindow => {
     e.returnValue = crypto.randomBytes(20).toString('hex');
   })
 
-  ipcMain.handle('save', require('./save.js')(mainWindow))
+  ipcMain.handle('save', require('./save.js')(mainWindow));
 
   ipcMain.handle('load', require('./load.js')(mainWindow));
 
@@ -21,4 +21,6 @@ module.exports = mainWindow => {
   ipcMain.handle('showMessageBox', async (e, options) => {
     return await dialog.showMessageBox(mainWindow, options);
   })
+
+  ipcMain.handle('createSubwindow', (e, name, options, data) => require('../create_subwindow.js')(mainWindow, name, options, data));
 }
