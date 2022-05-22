@@ -3,12 +3,12 @@ const path = require('path');
 const { env } = require('process');
 
 let mainWindow;
-function createWindow() {
+function createMainWindow() {
   mainWindow = new BrowserWindow({
     width: 1500,
     height: 900,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'preload/main.js'),
     },
   });
 
@@ -29,7 +29,7 @@ function createWindow() {
   }
   else Menu.setApplicationMenu(Menu.buildFromTemplate(require('./menu.js')(mainWindow)))
 
-  mainWindow.loadFile('renderer/index.html');
+  mainWindow.loadFile('renderer/main/index.html');
 
   mainWindow.on('close', e => {
     mainWindow.webContents.send('confirmSave');
@@ -44,7 +44,7 @@ function createWindow() {
   });
 }
 
-app.on('ready', createWindow);
+app.on('ready', createMainWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -54,6 +54,6 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   if (mainWindow === null) {
-    createWindow();
+    createMainWindow();
   }
 });
