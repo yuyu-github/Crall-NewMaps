@@ -14,9 +14,10 @@ function createMainWindow() {
 
   require('./ipc/ipc.js')(mainWindow);
 
+  let menu;
   if (env.TYPE == 'debug') {
     //デバッグ時のみデバッグメニューを表示
-    Menu.setApplicationMenu(Menu.buildFromTemplate([
+    menu = Menu.buildFromTemplate([
       ...require('./menu.js')(mainWindow),
       {
         label: 'デバッグ',
@@ -25,9 +26,11 @@ function createMainWindow() {
           { label: '再読み込み', role: 'reload' }
         ]
       }
-    ]));
+    ]);
   }
-  else Menu.setApplicationMenu(Menu.buildFromTemplate(require('./menu.js')(mainWindow)))
+  else menu = Menu.buildFromTemplate(require('./menu.js')(mainWindow))
+  if (process.platform == 'darwin') Menu.setApplicationMenu(menu);
+  else mainWindow.setMenu(menu);
 
   mainWindow.loadFile('renderer/main/index.html');
 

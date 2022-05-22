@@ -15,6 +15,8 @@ module.exports = async (mainWindow, name, options = {}, data = null) => {
 
   let win = new BrowserWindow(options);
 
+  win.setMenu(null);
+
   win.loadFile(`renderer/sub/${name}/index.html`);
 
   if (data != null) win.webContents.send('load', data);
