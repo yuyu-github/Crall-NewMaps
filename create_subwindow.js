@@ -5,7 +5,7 @@ const { env } = require('process');
 
 let subWindows = {};
 
-module.exports = async (mainWindow, name, options = {}, data = null) => {
+module.exports = async (mainWindow, name, options = {}, data = null, init = () => {}) => {
   if (subWindows[name] != null) return;
 
   let preloadFile = path.join(__dirname, `preload/${name}.js`)
@@ -29,4 +29,6 @@ module.exports = async (mainWindow, name, options = {}, data = null) => {
   win.on('closed', () => {
     subWindows[name] = null;
   })
+
+  init(win, mainWindow);
 }
