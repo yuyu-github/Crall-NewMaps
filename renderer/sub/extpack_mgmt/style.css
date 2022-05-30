@@ -1,0 +1,70 @@
+body {
+  display: flex;
+  margin: 0;
+  height: 100vh;
+}
+
+body > * {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+body > *:not(:last-child) {
+  padding-right: 0;
+}
+
+.top {
+  margin-bottom: 7.5px;
+}
+
+.bottom {
+  margin-top: 7.5px;
+}
+
+.top, .bottom {
+  display: flex;
+}
+
+.top > button, .bottom > button {
+  margin: 0 3px;
+  flex: 1;
+  height: 30px;
+  border: 1px black solid;
+  font-size: 14px;
+  background-color: #f1f1f1;
+}
+
+.top > button:hover, .bottom > button:hover {
+  background-color: #e1e1e1;
+}
+
+body > * > table {
+  width: 100%;
+  border: 1px black solid;
+  flex: 1;
+}
+
+body > * > table tbody {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 4px;
+}
+
+body > * > table tr {
+  display: flex;
+  background-color: white;
+  height: 18px;
+  padding: 2px;
+}
+
+body > * > table tr:hover {
+  background-color: #f1f1f1;
+}
+
+body > * > table td {
+  flex: 1;
+}
