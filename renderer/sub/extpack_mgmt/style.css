@@ -31,9 +31,9 @@ body > *:not(:last-child) {
 .top > button, .bottom > button {
   margin: 0 3px;
   flex: 1;
-  height: 30px;
+  height: 26px;
   border: 1px black solid;
-  font-size: 14px;
+  font-size: 13px;
   background-color: #f1f1f1;
 }
 
