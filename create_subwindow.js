@@ -20,7 +20,20 @@ module.exports = async (mainWindow, name, options = {}, data = null, init = () =
   let win = new BrowserWindow(options);
   subWindows[name] = win;
 
-  win.setMenu(null);
+  let menu = null;
+  if (env.TYPE == 'debug') {
+    //デバッグ時のみデバッグメニューを表示
+    menu = Menu.buildFromTemplate([
+      {
+        label: 'デバッグ',
+        submenu: [
+          { label: 'デベロッパーツール', role: 'toggleDevTools' },
+          { label: '再読み込み', role: 'reload' }
+        ]
+      }
+    ]);
+  }
+  win.setMenu(menu);
 
   win.loadFile(`renderer/sub/${name}/index.html`);
 
