@@ -11,7 +11,7 @@ module.exports = mainWindow => [
   {
     label: '拡張パック',
     submenu: [
-      { label: '拡張パックの管理', click: () => require('./create_subwindow.js')(mainWindow, 'extpack_mgmt') }
+      { label: '拡張パックの管理', click: () => require('./create_subwindow.js')(mainWindow, 'extpack_mgmt', { width: 900, height: 650 }) }
     ]
   }
 ]
