@@ -109,7 +109,7 @@ body {
 }
 
 #right-click-menu td :not(hr):hover {
-  background-color: #f3f3f3;
+  background-color: #f1f1f1;
 }
 
 #right-click-menu a:link, #right-click-menu a:visited, #right-click-menu a:hover, #right-click-menu a:active {
